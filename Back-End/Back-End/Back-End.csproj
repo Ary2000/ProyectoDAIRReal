@@ -124,19 +124,56 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditarSesionAIR.cs" />
+    <Compile Include="Models\FormCrearNotificacion.cs" />
+    <Compile Include="Models\FormCrearPropuestaAIR.cs" />
+    <Compile Include="Models\FormCrearPropuestaDAIR.cs" />
+    <Compile Include="Models\FormCrearSesionAIR.cs" />
+    <Compile Include="Models\FormCrearSesionDAIR.cs" />
+    <Compile Include="Models\FormEditarDetallesSesionAIR.cs" />
+    <Compile Include="Models\FormEditarPropuestaAIR.cs" />
+    <Compile Include="Models\FormEditarPropuestaDAIR.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -148,24 +185,65 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    <Content Include="src\bell.png" />
+    <Content Include="src\check.png" />
+    <Content Include="src\file.png" />
+    <Content Include="src\folder.png" />
+    <Content Include="src\logo.png" />
+    <Content Include="src\pencil.png" />
+    <Content Include="src\salir.png" />
+    <Content Include="src\search.png" />
+    <Content Include="src\trash.png" />
+    <Content Include="src\user.svg" />
+    <Content Include="src\users.png" />
+    <Content Include="src\user_img.png" />
+    <Content Include="styles\constancia-asambleista.css" />
+    <Content Include="styles\constancias.css" />
+    <Content Include="styles\control-asistencia.css" />
+    <Content Include="styles\menu.css" />
+    <Content Include="styles\notificaciones.css" />
+    <Content Include="styles\padron.css" />
+    <Content Include="styles\registro-asistencia.css" />
+    <Content Include="styles\registro-propuestas.css" />
+    <Content Include="styles\sesion.css" />
+    <Content Include="styles\sesiones.css" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\AsistenciaAIR.cshtml" />
+    <Content Include="Views\Home\AsistenciaSesionAIR.cshtml" />
+    <Content Include="Views\Home\ConstanciaAsambleista.cshtml" />
+    <Content Include="Views\Home\Constancias.cshtml" />
+    <Content Include="Views\Home\CrearNotificacion.cshtml" />
+    <Content Include="Views\Home\CrearPropuestaAIR.cshtml" />
+    <Content Include="Views\Home\CrearPropuestaDAIR.cshtml" />
+    <Content Include="Views\Home\CrearSesionAIR.cshtml" />
+    <Content Include="Views\Home\CrearSesionDAIR.cshtml" />
+    <Content Include="Views\Home\EditarPropuestaAIR.cshtml" />
+    <Content Include="Views\Home\EditarPropuestaDAIR.cshtml" />
+    <Content Include="Views\Home\EditarSesionAIR.cshtml" />
+    <Content Include="Views\Home\EditarSesionDAIR.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Notificaciones.cshtml" />
+    <Content Include="Views\Home\PadronAIR.cshtml" />
+    <Content Include="Views\Home\Propuesta.cshtml" />
+    <Content Include="Views\Home\PropuestaDAIR.cshtml" />
+    <Content Include="Views\Home\SesionAIR.cshtml" />
+    <Content Include="Views\Home\SesionDAIR.cshtml" />
+    <Content Include="Views\Home\SesionesAIR.cshtml" />
+    <Content Include="Views\Home\SesionesDAIR.cshtml" />
+    <Content Include="Views\Home\VerSesionAIR.cshtml" />
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
