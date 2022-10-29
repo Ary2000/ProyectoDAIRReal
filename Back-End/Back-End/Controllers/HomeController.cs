@@ -37,7 +37,7 @@ namespace Back_End.Controllers
             da.Fill(dt);
             return View(dt);
         }
-        
+
         [Route("Home/SesionesDAIR")]
         public ActionResult SesionesDAIR()
         {
@@ -51,7 +51,7 @@ namespace Back_End.Controllers
             return View(dt);
 
         }
-        
+
         [Route("Home/SesionAIR")]
         public ActionResult SesionAIR(string id)
         {
@@ -108,14 +108,14 @@ namespace Back_End.Controllers
             data.Fill(datatable);
             List<SelectListItem> items = new List<SelectListItem>();
             foreach (DataRow row in datatable.Rows) {
-                items.Add(new SelectListItem { Text = row["AnioInicio"].ToString()+" - "+ row["AnioFin"].ToString(), Value = row["Id"].ToString() });
+                items.Add(new SelectListItem { Text = row["AnioInicio"].ToString() + " - " + row["AnioFin"].ToString(), Value = row["Id"].ToString() });
             }
             ViewBag.Periodo = items;
             return View();
         }
 
         [HttpPost]
-        public ActionResult GuardarNuevaSesionAIR(FormCrearSesionAIR model){
+        public ActionResult GuardarNuevaSesionAIR(FormCrearSesionAIR model) {
             if (ModelState.IsValid)
             {
                 string path = "";
@@ -257,17 +257,17 @@ namespace Back_End.Controllers
                 }
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC UpdateSesionAIR " + model.Id + 
-                                                ", '" + model.Nombre + "', '" + 
-                                                model.Fecha + "', '" + 
-                                                model.TiempoInicial + "', '" + 
-                                                model.TiempoFinal + "', '" + 
+                SqlCommand cmd = new SqlCommand("EXEC UpdateSesionAIR " + model.Id +
+                                                ", '" + model.Nombre + "', '" +
+                                                model.Fecha + "', '" +
+                                                model.TiempoInicial + "', '" +
+                                                model.TiempoFinal + "', '" +
                                                 model.Link + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 SqlCommand cmd2 = new SqlCommand("EXEC NuevoRegistroAIR " + model.Id +
                                                 ", '" + path + "', '" +
-                                                model.NombrePadron+"'");
+                                                model.NombrePadron + "'");
                 cmd2.Connection = con;
                 cmd2.ExecuteNonQuery();
                 //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
@@ -352,7 +352,7 @@ namespace Back_End.Controllers
             return View();
         }
 
-        
+
         public ActionResult BorrarPropuestaAIR(String id)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -510,7 +510,7 @@ namespace Back_End.Controllers
                     + model.Nombre + "', '"
                     + model.Link + "', '"
                     + model.NumeroPropuesta + "', '"
-                    + model.VotosFavor + "', '" 
+                    + model.VotosFavor + "', '"
                     + model.VotosContra + "', '"
                     + model.VotosBlanco + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -632,6 +632,26 @@ namespace Back_End.Controllers
             con.Close();
             da.Fill(dt);
             return View(dt);
+        }
+
+        [Route("Home/Notificaciones")]
+        public ActionResult Notificaciones()
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC GetNotificaciones", con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);
+            return View(dt);
+        }
+
+        //CREAR NOTIFICACION
+        [Route("Home/CrearNotificacion")]
+        public ActionResult CrearNotificacion()
+        {
+            return View();
         }
     }
 
