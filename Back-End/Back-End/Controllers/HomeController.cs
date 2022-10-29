@@ -631,10 +631,44 @@ namespace Back_End.Controllers
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            return View(dt);
+            ViewBag.Id = id;
+            FromViewModelAsistencia mymodel = new FromViewModelAsistencia();
+            mymodel.datatable = dt;
+            return View(mymodel);
+        }
+
+        public ActionResult ActualizarAsistencia(FromViewModelAsistencia model)
+        {
+            string path = "";
+            try
+            {
+                if (model.asistencia.ArchivoPadron.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(model.asistencia.ArchivoPadron.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    model.asistencia.ArchivoPadron.SaveAs(_path);
+                    path = _path;
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+                //return View();
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                //return View();
+            }
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ActualizarRegistroAIR " + model.asistencia.Id +
+                                            ", '" + path + "', '" +
+                                            model.asistencia.NombrePadron + "'");
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            //DataTable dt2 = new DataTable();
+            con.Close();
+            return RedirectToAction("AsistenciaAIR");
         }
     }
-
-
 
 }

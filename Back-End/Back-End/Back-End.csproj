@@ -124,7 +124,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FromViewModelAsistencia.cs" />
     <Compile Include="Models\EditarSesionAIR.cs" />
+    <Compile Include="Models\FormActualizarAsistenciaAIR.cs" />
     <Compile Include="Models\FormCrearNotificacion.cs" />
     <Compile Include="Models\FormCrearPropuestaAIR.cs" />
     <Compile Include="Models\FormCrearPropuestaDAIR.cs" />
