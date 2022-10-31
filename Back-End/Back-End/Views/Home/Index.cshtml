@@ -64,7 +64,7 @@
                 <img class="card--img" src="~/src/users.png" alt="Card image cap">
                 <div class="card--body">
                     <h4 class="card--title">Padrón</h4>
-                    <a href="~/Pages/padron.html" class="btn btn-primary"> Ingresar </a>
+                    @Html.ActionLink("Ingresar", "PadronesAIR", null, new { controller = "Home", action = "PadronAIR" }, new { @class = "btn btn-primary" })
                 </div>
             </div>
         </div>

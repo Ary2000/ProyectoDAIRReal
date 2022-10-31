@@ -4,6 +4,7 @@ using System.Data;
 
 public class FromViewModelAsistencia
 {
-    public DataTable datatable{ get; set; }
+    public string Id { get; set; }
+    public DataTable datatable { get; set; }
     public FormActualizarAsistenciaAIR asistencia { get; set; }
 }

@@ -124,6 +124,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FromViewModelPadron.cs" />
+    <Compile Include="Models\FormCrearPadron.cs" />
     <Compile Include="Models\FromViewModelAsistencia.cs" />
     <Compile Include="Models\EditarSesionAIR.cs" />
     <Compile Include="Models\FormActualizarAsistenciaAIR.cs" />
@@ -228,7 +230,7 @@
     <Content Include="Views\Home\EditarSesionDAIR.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Notificaciones.cshtml" />
-    <Content Include="Views\Home\PadronAIR.cshtml" />
+    <Content Include="Views\Home\PadronesAIR.cshtml" />
     <Content Include="Views\Home\Propuesta.cshtml" />
     <Content Include="Views\Home\PropuestaDAIR.cshtml" />
     <Content Include="Views\Home\SesionAIR.cshtml" />
@@ -237,6 +239,9 @@
     <Content Include="Views\Home\SesionesDAIR.cshtml" />
     <Content Include="Views\Home\VerSesionAIR.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\Home\CrearPadronAIR.cshtml" />
+    <Content Include="Views\Home\EditarPadronAIR.cshtml" />
+    <Content Include="Views\Home\PadronAIR.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -98,7 +98,7 @@ SET NOCOUNT ON
 			
 			UPDATE dbo.RegistroAsistenciaAIR
 			SET Asistio = @Asistio
-			WHERE AsambleistaId = @AsambleistaId AND SesionAIRId = SesionAIRId
+			WHERE AsambleistaId = @AsambleistaId AND SesionAIRId = @SesionAIRId
 		COMMIT TRANSACTION modificarAsistenciaAIR;
 		SELECT 1;
 	END TRY
@@ -337,6 +337,12 @@ SET NOCOUNT ON
 			INNER JOIN dbo.Sede AS Sd ON TT.Sede = Sd.Nombre
 			WHERE dbo.Asambleista.Cedula = CONVERT(NVARCHAR(16), TT.Cedula)
 			
+			--UPDATE dbo.RegistroAsistenciaAIR
+			--SET Asistio = 1
+			--FROM @TempTable AS TT
+			--INNER JOIN dbo.Asambleista AS A ON A.Cedula = CONVERT(NVARCHAR(16), TT.Cedula)
+			--WHERE A.Id = dbo.RegistroAsistenciaAIR.Id AND @SesionId = dbo.RegistroAsistenciaAIR.SesionAIRId
+			
 			SELECT @inicio = MIN(Sec),
 					@fin = MAX(Sec)
 			FROM @TempTable
@@ -346,10 +352,10 @@ SET NOCOUNT ON
 					SELECT @cedula = convert(nvarchar(16), TT.Cedula)
 					FROM @TempTable TT
 					WHERE TT.Sec = @inicio
-					EXEC dbo.UpdateAsistenciaAIR @SesionId, @cedula, 0 
+					EXEC dbo.UpdateAsistenciaAIR @SesionId, @cedula, 1
 					SET @inicio = @inicio + 1
 				END
-			--SELECT * FROM dbo.RegistroAsistenciaAIR
+			SELECT * FROM dbo.RegistroAsistenciaAIR
 		COMMIT TRANSACTION modificarAsistenciaAIR;
 		SELECT 1;
 	END TRY

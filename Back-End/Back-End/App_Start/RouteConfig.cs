@@ -148,6 +148,26 @@ namespace Back_End
                 url: "{controller}/CrearNotificacion",
                 defaults: new { controller = "Home" }
             );
+            routes.MapRoute(
+                name: "PadronesAIR",
+                url: "{controller}/PadronesAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "PadronAIR",
+                url: "{controller}/PadronAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "CrearPadronAIR",
+                url: "{controller}/CrearPadronAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "EditarPadronAIR",
+                url: "{controller}/EditarPadronAIR",
+                defaults: new { controller = "Home" }
+            );
         }
     }
 }
