@@ -12,6 +12,8 @@ using System.Web.UI.WebControls;
 using System.Reflection;
 using Back_End.Models;
 using static System.Net.Mime.MediaTypeNames;
+using System.Web.UI;
+using System.Web.Optimization;
 //using static System.Net.WebRequestMethods;
 
 namespace Back_End.Controllers
@@ -194,9 +196,7 @@ namespace Back_End.Controllers
                     + model.Nombre + "', '"
                     + model.Fecha + "', '"
                     + model.TiempoInicial + "', '"
-                    + model.TiempoFinal + "', '"
-                    + model.Descripcion + "', '"
-                    + model.Link + "'", con);
+                    + model.TiempoFinal + "'", con);
                 var temp = cmd.ExecuteScalar();
                 SqlCommand cmd2 = new SqlCommand("EXEC NuevoRegistroAIR " + Convert.ToString(temp) +
                                                 ", '" + path + "', '" +
@@ -242,13 +242,12 @@ namespace Back_End.Controllers
                     + model.Nombre + "', '"
                     + model.Fecha + "', '"
                     + model.TiempoInicial + "', '"
-                    + model.TiempoFinal + "', '"
-                    + model.Descripcion + "', '"
-                    + model.PathArchivo + "'", con);
+                    + model.TiempoFinal + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
+                
             }
             return RedirectToAction("SesionesDAIR");
         }

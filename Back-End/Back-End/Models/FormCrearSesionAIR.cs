@@ -17,8 +17,6 @@ namespace Back_End.Models
         public string Fecha { get; set; }
         public string TiempoInicial { get; set; }
         public string TiempoFinal { get; set; }
-        public string Descripcion { get; set; }
-        public string Link { get; set; }
         public string NombrePadron { get; set; }
         public HttpPostedFileBase ArchivoPadron { get; set; }
     }

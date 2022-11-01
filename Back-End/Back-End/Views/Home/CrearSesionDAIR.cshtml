@@ -49,19 +49,19 @@
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre del Evento: </label>
                             @Html.TextBoxFor(model => model.Nombre, new
-                            {
-                               @class = "form-control",
-                               type = "text"
-                           })
+                       {
+                           @class = "form-control",
+                           type = "text"
+                       })
                             @Html.ValidationMessageFor(model => model.Nombre)
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03"> Periodo: </label>
                             @Html.DropDownList("Periodo", (IEnumerable<SelectListItem>)ViewBag.Periodo, String.Empty, new
-                            {
-                            @class = "form-control",
-                            type = "select"
-                            })
+                       {
+                           @class = "form-control",
+                           type = "select"
+                       })
                         </div>
 
                     </div>
@@ -98,14 +98,8 @@
 
                         <button class="btn btn-primary" type="submit">Guardar</button>
                     </div>
-
                 </form>
             }
-        </div>
-        <div class="table--container">
-
-        </div>
-        <div class="footer--container">
         </div>
 </body>
 

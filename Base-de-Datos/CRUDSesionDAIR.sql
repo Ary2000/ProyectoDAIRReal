@@ -11,9 +11,7 @@ CREATE PROC [dbo].[CreateSesionDAIR]
 	@Nombre NVARCHAR(64),
 	@Fecha DATE,
 	@Inicio TIME,
-	@Fin TIME,
-	@Descripcion NVARCHAR(200),
-	@Link NVARCHAR(200)
+	@Fin TIME
 AS
 BEGIN
 SET NOCOUNT ON
@@ -24,17 +22,13 @@ SET NOCOUNT ON
 										Nombre,
 										Fecha,
 										HoraInicio,
-										HoraFin, 
-										Descripcion,
-										Link,
+										HoraFin,
 										Valido)
 			SELECT @Periodo,
 					@Nombre,
 					@Fecha,
 					@Inicio,
 					@Fin,
-					@Descripcion,
-					@Link,
 					1;
 		COMMIT TRANSACTION nuevaSesionDAIR;
 		SELECT @@Identity Id;
@@ -60,7 +54,7 @@ AS
 BEGIN
 SET NOCOUNT ON
 	BEGIN TRY
-		SELECT Id,Nombre,Fecha,HoraInicio,HoraFin,Link
+		SELECT Id,Nombre,Fecha,HoraInicio,HoraFin
 		FROM dbo.SesionDAIR
 		WHERE [Id] = @Id
 	END TRY
@@ -82,8 +76,7 @@ CREATE PROC [dbo].[UpdateSesionDAIR]
 	@Nombre NVARCHAR(64),
 	@Fecha DATE,
 	@Inicio TIME,
-	@Fin TIME,
-	@Link NVARCHAR(256)
+	@Fin TIME
 AS
 BEGIN
 SET NOCOUNT ON
@@ -94,8 +87,7 @@ SET NOCOUNT ON
 			SET Nombre = @Nombre,
 				Fecha = @Fecha,
 				HoraInicio = @Inicio,
-				HoraFin = @Fin,
-				Link = @Link
+				HoraFin = @Fin
 			WHERE Id = @Id
 		COMMIT TRANSACTION modificarSesionDAIR;
 		SELECT @Id;

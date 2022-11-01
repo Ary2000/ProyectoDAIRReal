@@ -63,8 +63,6 @@ CREATE TABLE SesionAIR(
 	  [Fecha]				DATE NOT NULL,
 	  [HoraInicio]			TIME NOT NULL,
 	  [HoraFin]				TIME NOT NULL,
-	  [Descripcion] 			NVARCHAR(200),
-	  [Link]	 			NVARCHAR(200),
 	  [Valido]				BIT NOT NULL
 	  PRIMARY KEY CLUSTERED ([ID] ASC),
 	  FOREIGN KEY ([PeriodoId]) REFERENCES dbo.Periodo ([ID])
@@ -77,8 +75,6 @@ CREATE TABLE SesionDAIR(
 	  [Fecha]				DATE NOT NULL,
 	  [HoraInicio]			TIME NOT NULL,
 	  [HoraFin]				TIME NOT NULL,
-	  [Descripcion] 		NVARCHAR(200),
-	  [Link]	 			NVARCHAR(200),
 	  [Valido]				BIT NOT NULL
 	  PRIMARY KEY CLUSTERED ([ID] ASC),
 	  FOREIGN KEY ([PeriodoId]) REFERENCES dbo.Periodo ([ID])
