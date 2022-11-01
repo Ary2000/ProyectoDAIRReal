@@ -1,8 +1,6 @@
 ﻿@using System.Data
-
 @model Back_End.Models.FormCrearPropuestaAIR
 @{
-    ViewBag.SesionAIRId = ViewBag.SesionAIRId;
     Layout = null;
     ViewBag.Title = "CrearPropuestaAIR";
 }
@@ -32,7 +30,7 @@
 <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <h5 class="navbar--tittle"> Crear Propuesta de AIR</h5>
+            <h5 class="navbar--tittle"> Editar Propuesta de AIR</h5>
             <a href="./login.html" class="navbar--button">
                 <h5 href="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
                 <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
@@ -44,9 +42,11 @@
 <body>
     @Html.AntiForgeryToken()
     <div class="container">
-        <div class="search--container"
-             @using (Html.BeginForm($"GuardarNuevaPropuestaAIR", "Home", FormMethod.Post)) { 
-                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
+        <div class="search--container">
+            @using (Html.BeginForm($"GuardarNuevaPropuestaAIR/{ViewBag.SesionAIRId}", "Home", FormMethod.Post))
+
+            {
+                <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
@@ -62,7 +62,7 @@
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationTooltip03">Etapa: </label>
-                            @Html.DropDownList("Etapa", (IEnumerable<SelectListItem>)ViewBag.EtapaId, String.Empty, new
+                            @Html.DropDownList("EtapaId", (IEnumerable<SelectListItem>)ViewBag.EtapaId, String.Empty, new
                             {
                             @class = "form-control",
                             type = "select"
@@ -73,10 +73,10 @@
                         <div class="col-md-6 mb-3">
                             <label for="validationTooltip03">Aprovado: </label>
                             @Html.DropDownList("Aprovado", (IEnumerable<SelectListItem>)ViewBag.Aprovado, String.Empty, new
-                           {
-                           @class = "form-control",
-                           type = "select"
-                           })
+                            {
+                            @class = "form-control",
+                            type = "select"
+                            })
                         </div>
                     </div>
                     <div class="form-row">
@@ -130,6 +130,7 @@
                     </div>
 
                 </form>
+
             }
         </div>
         <div class="table--container">

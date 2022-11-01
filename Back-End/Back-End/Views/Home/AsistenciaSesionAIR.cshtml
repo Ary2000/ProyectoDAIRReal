@@ -86,7 +86,7 @@
                                 <div class="custom-control custom-checkbox">
                                     @if (row["Asistencia"].ToString() == "True")
                                     {
-                                        <input type="checkbox" class="custom-control-input" id="customCheck0" checked readonly>
+                                        <input type="checkbox" class="custom-control-input" id="customCheck0" checked readonly disabled>
                                     }
 
                                     @if (row["Asistencia"].ToString() == "False")
@@ -94,6 +94,8 @@
                                         <input type="checkbox" class="custom-control-input" id="customCheck0" disabled>
                                     }
                                     <label class="custom-control-label" for="customCheck0"></label>
+
+
                                 </div>
                             </td>
                         </tr>

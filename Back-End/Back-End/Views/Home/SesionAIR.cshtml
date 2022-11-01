@@ -43,19 +43,6 @@
 
 <body>
     <!-- The Modal -->
-    <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="info--votacion">
-                <h3>Votacion</h3>
-                <p>Votos a favor: 40</p>
-                <p>Votos en contra: 80</p>
-                <p>Votos nulos: 10</p>
-                <p>Votos en blanco: 2</p>
-            </div>
-            <a href="#" class="btn btn-primary ok" type="submit">OK</a>
-        </div>
-    </div>
     <div class="container-fluid container">
         <div class="container--header">
             <h4> @ViewBag.Nombre </h4>
@@ -105,12 +92,24 @@
                                 {
                                     @:<td>Rechazado</td>
                                 }
-                                <td>
-                                    <a href="#" class="btn btn-secondary btn-sm btn-votacion">
-                                        Ver votación
-                                    </a>
-                                    <a href=@row["Link"].ToString() target="_blank" class="btn btn-secondary btn-sm">Propuesta</a>
-                                </td>
+                            <td>
+                                <a href="#" class="btn btn-secondary btn-sm btn-votacion">
+                                    Ver votación
+                                </a>
+                                <div id="myModal" class="modal">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <div class="info--votacion">
+                                            <h3>Votación</h3>
+                                            <p>Votos a favor: @row["VotosAFavor"].ToString()</p>
+                                            <p>Votos en contra: @row["VotosEnContra"].ToString()</p>
+                                            <p>Votos en blanco: @row["VotosEnBlanco"].ToString()</p>
+                                        </div>
+                                        <a href="#" class="btn btn-primary ok" type="submit">OK</a>
+                                    </div>
+                                </div>
+                                <a href=@row["Link"].ToString()  target="_blank" class="btn btn-secondary btn-sm">Ver Propuesta</a>
+                            </td>
                                 <td>
 
                                     @Html.RouteLink("Editar", "EditarPropuestaAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/pencil.png", alt = "Lapiz" })

@@ -1,6 +1,5 @@
 ﻿@using System.Data
 @model Back_End.Models.FormEditarPropuestaAIR
-model.Id = ViewBag.Id;
 @{
     Layout = null;
     ViewBag.Title = "EditarPropuestaAIR";
@@ -51,7 +50,7 @@ model.Id = ViewBag.Id;
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre de la propuesta: </label>
-                            @Html.TextBoxFor(model => model.Nombre, new { placeholder = ViewBag.NombrePropuestaAIR, @class = "form-input" })
+                            @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombrePropuestaAIR, @class = "form-input" })
                             @Html.ValidationMessageFor(model => model.Nombre)
                         </div>
                     </div>
@@ -59,48 +58,45 @@ model.Id = ViewBag.Id;
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationTooltip03">Etapa: </label>
-                            <select class="form-control">
-                                <option value="value1">Aprovada</option>
-                                <option value="value2">Rechazado</option>
-                                <option value="value3">En pausa</option>
-                            </select>
+
+                            @Html.DropDownList("EtapaId", (IEnumerable<SelectListItem>)ViewBag.EtapaId, String.Empty, new
+                           {
+                           @class = "form-control",
+                           type = "select"
+                           })
+
                         </div>
                     </div>
-
-
-
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationTooltip03">Número de Propuesta: </label>
+                            @Html.TextBoxFor(model => model.NumeroPropuesta, new { Value = ViewBag.NumeroPropuesta, @class = "form-input" })
+                            @Html.ValidationMessageFor(model => model.NumeroPropuesta)
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Link de la carpeta: </label>
-                            @Html.TextBoxFor(model => model.Link, new
-                       {
-                           @class = "form-control",
-                           type = "form-input"
-                       })
+
+                            @Html.TextBoxFor(model => model.Link, new { Value = ViewBag.Link, @class = "form-input" })
+                            @Html.ValidationMessageFor(model => model.Link)
+
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos a favor: </label>
-                            @Html.TextBoxFor(model => model.VotosFavor, new
-                       {
-                           @class = "form-control",
-                           type = "form-input"
-                       })
+                            @Html.TextBoxFor(model => model.VotosFavor, new { Value = ViewBag.VotosFavor, @class = "form-input" })
+                            @Html.ValidationMessageFor(model => model.VotosFavor)
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos Contra: </label>
-                            @Html.TextBoxFor(model => model.VotosContra, new
-                       {
-                           @class = "form-control",
-                           type = "form-input"
-                       })
+                            @Html.TextBoxFor(model => model.VotosContra, new { Value = ViewBag.VotosContra, @class = "form-input" })
+                            @Html.ValidationMessageFor(model => model.VotosContra)
+
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos Blancos: </label>
-                            @Html.TextBoxFor(model => model.VotosBlanco, new
-                       {
-                           @class = "form-control",
-                           type = "form-input"
-                       })
+                            @Html.TextBoxFor(model => model.VotosBlanco, new { Value = ViewBag.VotosBlanco, @class = "form-input" })
+                            @Html.ValidationMessageFor(model => model.VotosBlanco)
                         </div>
                     </div>
 
