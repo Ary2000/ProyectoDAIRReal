@@ -227,7 +227,7 @@
     <Content Include="Views\Home\EditarPropuestaDAIR.cshtml" />
     <Content Include="Views\Home\EditarSesionAIR.cshtml" />
     <Content Include="Views\Home\EditarSesionDAIR.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Home\Notificaciones.cshtml" />
     <Content Include="Views\Home\PadronAIR.cshtml" />
     <Content Include="Views\Home\Propuesta.cshtml" />
@@ -238,7 +238,7 @@
     <Content Include="Views\Home\SesionesDAIR.cshtml" />
     <Content Include="Views\Home\VerSesionAIR.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -5,10 +5,10 @@ namespace Back_End.Models
     public class FormLogin
     {
         [Required]
-        public string Usuario { get; set; }
+        public string Nombre { get; set; }
         
         [Required]
-        public string Contrasenna { get; set; }
+        public string Contrasenia { get; set; }
         
     }
 }

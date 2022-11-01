@@ -26,22 +26,54 @@ namespace Back_End.Controllers
             return View();
         }
 
-        [Route("Home/Login")]
-        public ActionResult Login()
+        [Route("Home/Menu")]
+        public ActionResult Menu()
         {
             return View();
         }
 
-        [Route("Home/Login")]
+        [Route("Home/Logout")]
         public ActionResult Logout()
         {
-            return RedirectToAction("Login");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult ValidarLogin(FormLogin model) {
-             return View();
-            //return RedirectToAction("");
+            if (ModelState.IsValid)
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC IniciarSesion "
+                    + model.Nombre + ", '"
+                    + model.Contrasenia + "'", con);
+                int dt_response;
+                dt_response = (int)cmd.ExecuteScalar();
+                con.Close();
+                if (dt_response == 1)
+                {
+                    ViewBag.Message = "todo bien";
+                    System.Diagnostics.Debug.WriteLine("hola hehhehe");
+                    return RedirectToAction("Menu");
+                }
+                else if (dt_response == 0)
+                {
+                    ViewBag.Message = "todo mal";
+                    System.Diagnostics.Debug.WriteLine("hola mal");
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Message = "todo pésimo";
+                    System.Diagnostics.Debug.WriteLine("hola pez");
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         [Route("Home/SesionesAIR")]

@@ -32,10 +32,6 @@
     <nav class="navbar">
         <div class="container-fluid">
             <h5 class="navbar--tittle"> Sesiones de AIR </h5>
-            <a href="./login.html" class="navbar--button">
-                <h5 href="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
-                <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
-            </a>
         </div>
     </nav>
 </header>
@@ -72,7 +68,7 @@
             </table>
         </div>
         <div class="footer--container">
-            @Html.ActionLink("Volver", "/", null, new { @class = "btn btn-secondary btn-back" })
+            @Html.ActionLink("Volver", "Menu", null, new { @class = "btn btn-secondary btn-back" })
             @Html.ActionLink("Crear sesión AIR", "CrearSesionAIR", null, new { @class = "btn btn-primary btn-back" })
         </div>
         <script>

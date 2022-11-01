@@ -149,8 +149,13 @@ namespace Back_End
                 defaults: new { controller = "Home" }
             );
             routes.MapRoute(
-                name: "Login",
-                url: "{controller}/Login",
+                name: "Menu",
+                url: "{controller}/Menu",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "ValidarLogin",
+                url: "{controller}/ValidarLogin",
                 defaults: new { controller = "Home" }
             );
         }
