@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using System.Reflection;
 using Back_End.Models;
 using static System.Net.Mime.MediaTypeNames;
+using System.Web.DynamicData;
 //using static System.Net.WebRequestMethods;
 
 namespace Back_End.Controllers
@@ -565,6 +566,159 @@ namespace Back_End.Controllers
             return View();
         }
 
+        [Route("Home/PadronesAIR")]
+        public ActionResult PadronesAIR()
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC GetPeriodo", con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);
+            return View(dt);
+        }
+
+        [Route("Home/PadronAIR")]
+        public ActionResult PadronAIR(String id)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC GetPadron " + id, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            SqlCommand cmd2 = new SqlCommand("EXEC ReadPeriodo " + id, con);
+            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            DataTable dt2 = new DataTable();
+
+            con.Close();
+            da.Fill(dt);
+            da2.Fill(dt2);
+            ViewBag.Nombre = "Padrón " + dt2.Rows[0]["AnioInicio"] + "-" + dt2.Rows[0]["AnioFin"];
+            return View(dt);
+        }
+
+        [Route("Home/CrearPadronAIR")]
+        public ActionResult CrearPadronAIR()
+        {
+            /*SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ReadPeriodo" + id, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);*/
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GuardarNuevoPadronAIR(FormCrearPadron model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = "";
+                try
+                {
+                    if (model.ArchivoPadron.ContentLength > 0)
+                    {
+                        string _FileName = Path.GetFileName(model.ArchivoPadron.FileName);
+                        string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                        model.ArchivoPadron.SaveAs(_path);
+                        path = _path;
+                    }
+                    ViewBag.Message = "File Uploaded Successfully!!";
+                    //return View();
+                }
+                catch
+                {
+                    ViewBag.Message = "File upload failed!!";
+                    //return View();
+                }
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC CreatePeriodo " + 
+                    model.AnioInicio + ", " +
+                    model.AnioFin);
+                cmd.Connection = con;
+                var temp = cmd.ExecuteScalar();
+                SqlCommand cmd2 = new SqlCommand("EXEC NuevoPadronAIR " + Convert.ToString(temp) +
+                                                ", '" + path + "', '" +
+                                                model.NombrePadron + "'");
+                cmd2.Connection = con;
+                cmd2.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                //DataTable dt = new DataTable();
+                con.Close();
+                //da.Fill(dt);
+            }
+            return RedirectToAction("PadronesAIR");
+        }
+
+        [Route("Home/EditarPadronAIR")]
+        public ActionResult EditarPadronAIR(String id)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ReadPeriodo " + id, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);
+            ViewBag.Id = id;
+            ViewBag.AnioInicio = dt.Rows[0]["AnioInicio"];
+            ViewBag.AnioFin = dt.Rows[0]["AnioFin"];
+            FromViewModelPadron mymodel = new FromViewModelPadron();
+            mymodel.datatable = dt;
+            return View(mymodel);
+        }
+
+        [HttpPost]
+        public ActionResult EnviarEdicionPadronAIR(FromViewModelPadron model)
+        {
+            if (ModelState.IsValid)
+            {
+                System.Console.WriteLine("Se tiene la infomacion");
+                string path = "";
+                try
+                {
+                    if (model.padron.ArchivoPadron.ContentLength > 0)
+                    {
+                        string _FileName = Path.GetFileName(model.padron.ArchivoPadron.FileName);
+                        string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                        model.padron.ArchivoPadron.SaveAs(_path);
+                        path = _path;
+                    }
+                    ViewBag.Message = "File Uploaded Successfully!!";
+                    //return View();
+                }
+                catch
+                {
+                    ViewBag.Message = "File upload failed!!";
+                    //return View();
+                }
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC NuevoPadronAIR " + model.Id +
+                                                ", '" + path + "', '" +
+                                                model.padron.NombrePadron + "'");
+                cmd.Connection = con;
+                cmd.ExecuteNonQuery();
+
+                SqlCommand cmd2 = new SqlCommand("EXEC UpdatePeriodo " + model.Id +
+                                                ", " + model.padron.AnioInicio + ", " +
+                                                model.padron.AnioFin);
+                cmd2.Connection = con;
+                cmd2.ExecuteNonQuery();
+                //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                //DataTable dt2 = new DataTable();
+                con.Close();
+                //da.Fill(dt);
+                //da2.Fill(dt2);
+            }
+            return RedirectToAction("PadronesAIR");
+        }
+
         [HttpPost]
         public ActionResult GuardarNuevaPropuestaAIR(FormCrearPropuestaAIR model)
         {
@@ -699,7 +853,43 @@ namespace Back_End.Controllers
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            return View(dt);
+            ViewBag.Id = id;
+            FromViewModelAsistencia mymodel = new FromViewModelAsistencia();
+            mymodel.datatable = dt;
+            return View(mymodel);
+        }
+
+        public ActionResult ActualizarAsistencia(FromViewModelAsistencia model)
+        {
+            string path = "";
+            try
+            {
+                if (model.asistencia.ArchivoPadron.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(model.asistencia.ArchivoPadron.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    model.asistencia.ArchivoPadron.SaveAs(_path);
+                    path = _path;
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+                //return View();
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                //return View();
+            }
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ActualizarRegistroAIR " + model.Id +
+                                            ", '" + path + "', '" +
+                                            model.asistencia.NombrePadron + "'");
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            //DataTable dt2 = new DataTable();
+            con.Close();
+            return RedirectToAction("AsistenciaAIR");
         }
 
         [Route("Home/Notificaciones")]
@@ -769,7 +959,5 @@ namespace Back_End.Controllers
             return RedirectToAction("Notificaciones");
         }
     }
-
-
 
 }

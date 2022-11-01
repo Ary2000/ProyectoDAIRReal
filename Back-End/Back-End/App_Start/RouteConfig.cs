@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -156,6 +156,26 @@ namespace Back_End
             routes.MapRoute(
                 name: "ValidarLogin",
                 url: "{controller}/ValidarLogin",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "PadronesAIR",
+                url: "{controller}/PadronesAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "PadronAIR",
+                url: "{controller}/PadronAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "CrearPadronAIR",
+                url: "{controller}/CrearPadronAIR",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "EditarPadronAIR",
+                url: "{controller}/EditarPadronAIR",
                 defaults: new { controller = "Home" }
             );
         }

@@ -1,6 +1,6 @@
 ﻿
 @using System.Data
-@model System.Data.DataTable
+@model FromViewModelAsistencia
 @{
     ViewBag.Title = "AsistenciaSesion";
     Layout = null;
@@ -72,7 +72,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (DataRow row in Model.Rows)
+                    @foreach (DataRow row in ((DataTable)Model.datatable).Rows)
                     {
                         <tr>
                             <th scope="row">@row["Id"].ToString()</th>
@@ -100,7 +100,16 @@
             </table>
         </div>
         <div class="footer--container">
-            @Html.ActionLink("Volver", "AsistenciaAIR", null, new { @class = "btn btn-secondary btn-back" })
+            <div class="col-md-3 mb-3">
+                @Html.ActionLink("Volver", "AsistenciaAIR", null, new { @class = "btn btn-secondary btn-back" })
+                @using (Html.BeginForm($"ActualizarAsistencia/{ViewBag.Id}", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label for="validationTooltip03">Padrón: </label>
+                    @Html.TextBoxFor(model => model.asistencia.NombrePadron, new { @class = "form-control", type = "text" })
+                    @Html.TextBoxFor(model => model.asistencia.ArchivoPadron, new { type = "file" }) <br />
+                    <button class="btn btn-outline-secondary" type="submit">Guardar</button>
+                }
+            </div>
         </div>
 </body>
 </html>
