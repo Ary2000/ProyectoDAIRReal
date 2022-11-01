@@ -71,7 +71,7 @@
                                 <td>@row["FechaNotificacion"]</td>
                                 <td>
                                     @Html.RouteLink("Editar", "EditarSesionAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
-                                    @Html.ActionLink("Borrar", "BorrarSesionAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
+                                    @Html.ActionLink("Borrar", "BorrarNotificacion", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
                                 </td>
                             </tr>
                         }
@@ -81,7 +81,7 @@
             </div>
             <div class="container--header">
                 @Html.ActionLink("Volver", "/", null, new { @class = "btn btn-secondary btn-back" })
-                @Html.RouteLink("Agregar notificacion", null, new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "btn btn-primary" })
+                @Html.RouteLink("Agregar notificacion", "CrearNotificacion", null, new { @class = "btn btn-primary" })
 
             </div>
         </form>

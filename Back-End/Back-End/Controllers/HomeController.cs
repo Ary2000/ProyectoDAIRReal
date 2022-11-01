@@ -25,6 +25,25 @@ namespace Back_End.Controllers
         {
             return View();
         }
+
+        [Route("Home/Login")]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [Route("Home/Login")]
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public ActionResult ValidarLogin(FormLogin model) {
+             return View();
+            //return RedirectToAction("");
+        }
+
         [Route("Home/SesionesAIR")]
         public ActionResult SesionesAIR()
         {
@@ -49,7 +68,6 @@ namespace Back_End.Controllers
             con.Close();
             da.Fill(dt);
             return View(dt);
-
         }
 
         [Route("Home/SesionAIR")]
@@ -160,8 +178,6 @@ namespace Back_End.Controllers
             }
             return RedirectToAction("SesionesAIR");
         }
-
-
 
         [Route("Home/CrearSesionDAIR")]
         public ActionResult CrearSesionDAIR()
@@ -609,7 +625,6 @@ namespace Back_End.Controllers
             return View(datatable4);
         }
 
-
         public ActionResult AsistenciaAIR()
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -652,6 +667,53 @@ namespace Back_End.Controllers
         public ActionResult CrearNotificacion()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GuardarNuevaNotificacion(FormCrearNotificacion model)
+        {
+            if (ModelState.IsValid)
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC CreateNotificacion "
+                    + model.Descripcion + "', '"
+                    + model.FechaNotificacion + "'", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                con.Close();
+                da.Fill(dt);
+            }
+            return RedirectToAction("Notificaciones");
+        }
+
+        [Route("Home/EditarNotificacion")]
+        // https://stackoverflow.com/questions/11100981/asp-net-mvc-open-pdf-file-in-new-window
+        public ActionResult EditarNotificacion(string id)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion " + id, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);
+            ViewBag.Nombre = dt.Rows[0]["Nombre"];
+            ViewBag.Contrasenna = dt.Rows[0]["Contrasenia"];
+            return RedirectToAction("Notificaciones");
+            //return File(path, "application/pdf");
+        }
+
+        public ActionResult BorrarNotificacion(string id)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC DeleteNotificacion " + id, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            con.Close();
+            da.Fill(dt);
+            return RedirectToAction("Notificaciones");
         }
     }
 

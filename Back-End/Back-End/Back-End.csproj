@@ -128,6 +128,7 @@
     <Compile Include="Models\FormCrearNotificacion.cs" />
     <Compile Include="Models\FormCrearPropuestaAIR.cs" />
     <Compile Include="Models\FormCrearPropuestaDAIR.cs" />
+    <Compile Include="Models\FormLogin.cs" />
     <Compile Include="Models\FormCrearSesionAIR.cs" />
     <Compile Include="Models\FormCrearSesionDAIR.cs" />
     <Compile Include="Models\FormEditarDetallesSesionAIR.cs" />
@@ -187,6 +188,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="src\bell.png" />
     <Content Include="src\check.png" />
+    <Content Include="src\DAIRlogo.png" />
     <Content Include="src\file.png" />
     <Content Include="src\folder.png" />
     <Content Include="src\logo.png" />
@@ -200,6 +202,7 @@
     <Content Include="styles\constancia-asambleista.css" />
     <Content Include="styles\constancias.css" />
     <Content Include="styles\control-asistencia.css" />
+    <Content Include="styles\login.css" />
     <Content Include="styles\menu.css" />
     <Content Include="styles\notificaciones.css" />
     <Content Include="styles\padron.css" />
@@ -235,6 +238,7 @@
     <Content Include="Views\Home\SesionesDAIR.cshtml" />
     <Content Include="Views\Home\VerSesionAIR.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

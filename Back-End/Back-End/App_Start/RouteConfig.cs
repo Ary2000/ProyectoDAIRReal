@@ -148,6 +148,11 @@ namespace Back_End
                 url: "{controller}/CrearNotificacion",
                 defaults: new { controller = "Home" }
             );
+            routes.MapRoute(
+                name: "Login",
+                url: "{controller}/Login",
+                defaults: new { controller = "Home" }
+            );
         }
     }
 }

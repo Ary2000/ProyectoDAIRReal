@@ -23,6 +23,11 @@
     margin: 5px;
 }
 
+.navbar--cerrar--sesion {
+    color: white !important;
+
+}
+
 .container--notification {
     display: flex;
     justify-content: right;

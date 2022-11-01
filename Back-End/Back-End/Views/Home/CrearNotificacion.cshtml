@@ -46,7 +46,7 @@
     <div class="container-fluid container">
         <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
             <div class="form--container">
-                @using (Html.BeginForm("FormCrearNotificacion", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("GuardarNuevaNotificacion", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
@@ -76,9 +76,8 @@
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
                                 <div class="container--header">
-                                    @Html.ActionLink("Volver", "/", null, new { @class = "btn btn-secondary btn-back" })
-                                    @Html.RouteLink("Agregar notificacion", null, new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "btn btn-primary" })
-
+                                    @Html.ActionLink("Volver", "Notificaciones", null, new { @class = "btn btn-secondary btn-back" })
+                                    <button class="btn btn-primary" type="submit">Guardar</button>
                                 </div>
                             </div>
                         </div>

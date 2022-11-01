@@ -25,7 +25,9 @@
         <div class="container-fluid">
             <h5 class="navbar--tittle"> Menú principal </h5>
             <button type="button" class="navbar--button">
-                <h5 class="navbar--cerrar--sesion"> Cerrar sesión </h5>
+                <h5 class="navbar--cerrar--sesion">
+                    @Html.ActionLink("Cerrar sesión", "Login", null, new { @class = "navbar--cerrar--sesion" })
+                </h5>
                 <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
             </button>
         </div>
