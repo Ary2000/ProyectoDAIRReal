@@ -45,7 +45,7 @@
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre del Evento: </label>
-                            @Html.TextBoxFor(model => model.Nombre, new { placeholder = ViewBag.NombreSesionAIR, @class = "form-input" })
+                            @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombreSesionDAIR, @class = "form-input" })
                             @Html.ValidationMessageFor(model => model.Nombre)
                         </div>
 

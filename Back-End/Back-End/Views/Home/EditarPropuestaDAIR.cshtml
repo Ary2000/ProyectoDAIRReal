@@ -1,7 +1,5 @@
 ﻿@using System.Data
 @model Back_End.Models.FormEditarPropuestaDAIR
-model.Id = ViewBag.Id;
-model.SesionDAIRId = ViewBag.SesionDAIRId;
 @{
     Layout = null;
     ViewBag.Title = "EditarPropuestaDAIR";
@@ -48,7 +46,7 @@ model.SesionDAIRId = ViewBag.SesionDAIRId;
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre de la propuesta: </label>
-                            @Html.TextBoxFor(model => model.Nombre, new { placeholder = ViewBag.NombrePropuestaDAIR, @class = "form-input" })
+                            @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombrePropuestaDAIR, @class = "form-input" })
                             @Html.ValidationMessageFor(model => model.Nombre)
                         </div>
                     </div>
@@ -66,7 +64,7 @@ model.SesionDAIRId = ViewBag.SesionDAIRId;
                     <div class="form-row">
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Link de la carpeta: </label>
-                            @Html.TextBoxFor(model => model.Link, new { placeholder = ViewBag.Link, @class = "form-input" })
+                            @Html.TextBoxFor(model => model.Link, new { Value = ViewBag.Link, @class = "form-input" })
                             @Html.ValidationMessageFor(model => model.Link)
                         </div>
                     </div>

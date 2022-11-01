@@ -417,6 +417,16 @@ namespace Back_End.Controllers
         public ActionResult EditarPropuestaAIR(String id)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            SqlCommand cmd1 = new SqlCommand("SELECT * FROM dbo.Etapa;", con);
+            SqlDataAdapter data = new SqlDataAdapter(cmd1);
+            DataTable datatable = new DataTable();
+            data.Fill(datatable);
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (DataRow row in datatable.Rows)
+            {
+                items.Add(new SelectListItem { Text = row["Nombre"].ToString(), Value = row["Id"].ToString() });
+            }
+            ViewBag.EtapaId = items;
             con.Open();
             SqlCommand cmd = new SqlCommand("EXEC ReadPropuestaAIR " + id, con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -425,6 +435,11 @@ namespace Back_End.Controllers
             da.Fill(dt);
             ViewBag.NombrePropuestaAIR = dt.Rows[0]["Nombre1"];
             ViewBag.ID = id;
+            ViewBag.Link = dt.Rows[0]["Link"];
+            ViewBag.NumeroPropuesta = dt.Rows[0]["NumeroDePropuesta"];
+            ViewBag.VotosFavor = dt.Rows[0]["VotosAFavor"];
+            ViewBag.VotosContra= dt.Rows[0]["VotosEnContra"];
+            ViewBag.VotosBlanco = dt.Rows[0]["VotosEnBlanco"];
             return View();
         }
 
@@ -448,12 +463,16 @@ namespace Back_End.Controllers
         [HttpPost]
         public ActionResult EnviarEdicionPropuestaAIR(FormEditarPropuestaAIR model)
         {
+     
             if (!ModelState.IsValid)
             {
-                System.Console.WriteLine("Se tiene la infomacion");
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
 
+                SqlCommand cmd1 = new SqlCommand("EXEC ReadPropuestaAIR " + model.Id, con);
+                SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
+                DataTable dt1 = new DataTable();
+                da1.Fill(dt1);
                 SqlCommand cmd = new SqlCommand("EXEC UpdatePropuestaAIR "
                     + model.Id + ", '"
                     + model.EtapaId + "', '"
@@ -467,8 +486,10 @@ namespace Back_End.Controllers
 
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
-                con.Close();
                 da.Fill(dt);
+                con.Close();
+                return RedirectToAction("SesionesAIR");// + dt1.Rows[0]["SesionAIRId"].ToString());
+
             }
             return RedirectToAction("SesionesAIR");
         }
@@ -547,7 +568,7 @@ namespace Back_End.Controllers
         [HttpPost]
         public ActionResult GuardarNuevaPropuestaAIR(FormCrearPropuestaAIR model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
@@ -566,7 +587,7 @@ namespace Back_End.Controllers
                 con.Close();
                 da.Fill(dt);
             }
-            return RedirectToAction("SesionesAIR");
+            return RedirectToAction("SesionAIR/"+model.Id.ToString());
         }
 
         [HttpPost]
