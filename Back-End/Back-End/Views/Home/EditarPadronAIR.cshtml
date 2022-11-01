@@ -1,10 +1,12 @@
-﻿@using System.Data
-@model Back_End.Models.FormEditarPropuestaDAIR
+﻿
+@using System.Data
+
+@model FromViewModelPadron
+
 @{
     Layout = null;
-    ViewBag.Title = "EditarPropuestaDAIR";
+    ViewBag.Title = "EditarPadronAIR";
 }
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +32,11 @@
 <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <h5 class="navbar--tittle"> Editar Propuesta de DAIR</h5>
+            <h5 class="navbar--tittle"> Editar Padrón AIR</h5>
+            <a href="./login.html" class="navbar--button">
+                <h5 href="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
+                <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
+            </a>
         </div>
     </nav>
 </header>
@@ -39,47 +45,46 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm($"EnviarEdicionPropuestaDAIR/{ViewBag.ID}", "Home", FormMethod.Post))
+            @using (Html.BeginForm($"EnviarEdicionPadronAIR/{ViewBag.Id}", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="validationTooltip03">Nombre de la propuesta: </label>
-                            @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombrePropuestaDAIR, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Nombre)
+                        
+                        <div class="col-md-3 mb-3">
+                            <label for="validationTooltip03">Año Inicio: </label>
+                            @Html.TextBoxFor(model => model.padron.AnioInicio, new { Value = ViewBag.AnioInicio, @class = "form-input" })
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="validationTooltip03">Año Fin: </label>
+                            @Html.TextBoxFor(model => model.padron.AnioFin, new { Value = ViewBag.AnioFin, @class = "form-input" })
                         </div>
                     </div>
-
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="validationTooltip03">Aprovado: </label>
-                            <select class="form-control">
-                                <option value=1>Sí</option>
-                                <option value=0>No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="col-md-3 mb-3">
-                            <label for="validationTooltip03">Link de la carpeta: </label>
-                            @Html.TextBoxFor(model => model.Link, new { Value = ViewBag.Link, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Link)
+                            
+                            <label for="validationTooltip03">Padrón: </label>
+                            @Html.TextBoxFor(model => model.padron.NombrePadron, new
+                       {
+                           Placeholder = "Nombre Hoja",
+                           @class = "form-control",
+                           type = "text"
+                       })
+                            @Html.TextBoxFor(model => model.padron.ArchivoPadron, new { type = "file" }) <br />
                         </div>
                     </div>
 
                     <div class="container--header">
-                        @Html.ActionLink("Volver", "SesionesDAIR", new { @class = "btn btn-outline-secondary" });
-                        <button class="btn btn-outline-secondary" type="submit">Guardar</button>
+
+                        @Html.ActionLink("Volver", "PadronesAIR", null, new { @class = "btn btn-secondary btn-back" })
+
+                        <button class="btn btn-primary" type="submit">Guardar</button>
                     </div>
 
                 </form>
             }
         </div>
-        <div class="table--container">
 
-        </div>
         <div class="footer--container">
         </div>
 </body>

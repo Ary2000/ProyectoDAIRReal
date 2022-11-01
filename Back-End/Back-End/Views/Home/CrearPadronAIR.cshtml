@@ -1,8 +1,11 @@
-﻿@using System.Data
-@model Back_End.Models.FormEditarDetallesSesionAIR
+﻿
+@using System.Data
+
+@model Back_End.Models.FormCrearPadron
+
 @{
     Layout = null;
-    ViewBag.Title = "EditarSesionAIR";
+    ViewBag.Title = "CrearPadronAIR";
 }
 <!DOCTYPE html>
 <html>
@@ -29,7 +32,11 @@
 <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <h5 class="navbar--tittle"> Editar sesión DAIR</h5>
+            <h5 class="navbar--tittle"> Crear padrón AIR</h5>
+            <a href="./login.html" class="navbar--button">
+                <h5 href="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
+                <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
+            </a>
         </div>
     </nav>
 </header>
@@ -38,56 +45,53 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm($"EnviarEdicionSesionDAIR/{ViewBag.ID}", "Home", FormMethod.Post))
+            @using (Html.BeginForm("GuardarNuevoPadronAIR", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                     <div class="form-row">
-                        <div class="col-md-4 mb-3">
-                            <label for="validationTooltip03">Nombre del Evento: </label>
-                            @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombreSesionDAIR, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Nombre)
+                        
+                        <div class="col-md-3 mb-3">
+                            <label for="validationTooltip03">Año Inicio: </label>
+                            @Html.TextBoxFor(model => model.AnioInicio, new
+                       {
+                           @class = "form-control",
+                           type = "text"
+                       })
                         </div>
-
+                        <div class="col-md-3 mb-3">
+                            <label for="validationTooltip03">Año Fin: </label>
+                            @Html.TextBoxFor(model => model.AnioFin, new
+                       {
+                           @class = "form-control",
+                           type = "text"
+                       })
+                        </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-3 mb-3">
-                            <label for="validationTooltip03">Fecha Sesión: </label>
-                            @Html.TextBoxFor(model => model.Fecha, new
+                        <div class="col-md-6 mb-3">
+                            
+                            <label for="validationTooltip03">Padrón: </label>
+                            @Html.TextBoxFor(model => model.NombrePadron, new
                        {
                            @class = "form-control",
-                           type = "date"
+                           type = "text"
                        })
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationTooltip03">Hora Inicio: </label>
-                            @Html.TextBoxFor(model => model.TiempoInicial, new
-                       {
-                           @class = "form-control",
-                           type = "time"
-                       })
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationTooltip03">Hora Fin: </label>
-                            @Html.TextBoxFor(model => model.TiempoFinal, new
-                       {
-                           @class = "form-control",
-                           type = "time"
-                       })
+                            @Html.TextBoxFor(model => model.ArchivoPadron, new { type = "file" }) <br />
                         </div>
                     </div>
 
                     <div class="container--header">
-                        @Html.ActionLink("Volver", "SesionesDAIR", new { @class = "btn btn-outline-secondary" })
-                        <button class="btn btn-outline-secondary" type="submit">Guardar</button>
+
+                        @Html.ActionLink("Volver", "PadronesAIR", null, new { @class = "btn btn-secondary btn-back" })
+
+                        <button class="btn btn-primary" type="submit">Guardar</button>
                     </div>
 
                 </form>
             }
         </div>
-        <div class="table--container">
 
-        </div>
         <div class="footer--container">
         </div>
 </body>

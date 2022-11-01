@@ -114,3 +114,40 @@ SELECT * FROM [dbo].Asambleista
 --               ''Microsoft.ACE.OLEDB.12.0'',
 --               ''Excel 12.0;HDR=YES;Database=' + @Route + ''',
 --               ''SELECT * FROM [Sheet1$]'')'
+
+
+SELECT [DEPARTAMENTO / ESCUELA / GRUPO ADMINISTRATIVO],
+		SECTOR,
+		[CAMPUS O  CENTRO ACADÉMICO],
+		NOMBRE + ' ' +[PRIMER APELLIDO] + ' ' + [SEGUNDO APELLIDO],
+		CÉDULA
+FROM OPENROWSET('Microsoft.ACE.OLEDB.16.0',
+    'Excel 12.0; Database=C:\Users\admin\Desktop\TEC\2022\Semestre II\Proyecto\Padrón Gnrl Provisional AIR-104-2022 10 oct22 (1).xlsx', 'select * from [Padrón Gnl Prov 10 oct$]')
+WHERE CÉDULA IS NOT NULL
+
+
+DECLARE @TempTable TABLE(Sec INT IDENTITY(1,1),
+							Departamento NVARCHAR(128),
+							Sector NVARCHAR(32),
+							Sede NVARCHAR(32),
+							Nombre NVARCHAR(128),
+							Cedula NVARCHAR(32))
+INSERT INTO @TempTable(Departamento,Sector,Sede,Nombre,Cedula)
+SELECT [DEPARTAMENTO],
+		SECTOR,
+		[SEDE],
+		NOMBRE,
+		CEDULA
+FROM OPENROWSET('Microsoft.ACE.OLEDB.16.0',
+    'Excel 12.0; Database=C:\Users\admin\Desktop\TEC\2022\Semestre II\Proyecto\Copia Padrón General Definitivo.xlsx', 'select * from [General Definitivo$]')
+--WHERE CÉDULA IS NOT NULL
+
+SELECT * FROM @TempTable
+
+SELECT [DEPARTAMENTO],
+		SECTOR,
+		[SEDE],
+		NOMBRE,
+		CEDULA
+FROM OPENROWSET('Microsoft.ACE.OLEDB.16.0',
+    'Excel 12.0; Database=C:\Users\admin\Desktop\TEC\2022\Semestre II\Proyecto\Padrón General Definitivo Representantes ante la AIR 2018.2020.Sin protección.xlsx', 'select * from [General Definitivo$]')

@@ -59,7 +59,7 @@
                             <th scope="row">@row["Id"].ToString()</th>
                             <td>@(row["AnioInicio"].ToString() + "-" + row["AnioFin"].ToString())</td>
                             <td>@row["Nombre"]</td>
-                            <td>@row["Fecha"]</td>
+                            <td>@(row["Fecha"].ToString().Substring(0,10))</td>
                             <td>@Html.RouteLink("Ver detalles", "SesionDAIR", new { id = row["Id"] }, new { @class = "btn btn-primary" })</td>
                             <td>
                                 @Html.RouteLink("Editar", "EditarSesionDAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
