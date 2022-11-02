@@ -12,7 +12,6 @@ using System.Web.UI.WebControls;
 using System.Reflection;
 using Back_End.Models;
 using static System.Net.Mime.MediaTypeNames;
-using System.Web.DynamicData;
 //using static System.Net.WebRequestMethods;
 
 namespace Back_End.Controllers
@@ -26,57 +25,6 @@ namespace Back_End.Controllers
         {
             return View();
         }
-
-        [Route("Home/Menu")]
-        public ActionResult Menu()
-        {
-            return View();
-        }
-
-        [Route("Home/Logout")]
-        public ActionResult Logout()
-        {
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult ValidarLogin(FormLogin model) {
-            if (ModelState.IsValid)
-            {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC IniciarSesion "
-                    + model.Nombre + ", '"
-                    + model.Contrasenia + "'", con);
-                int dt_response;
-                dt_response = (int)cmd.ExecuteScalar();
-                con.Close();
-                if (dt_response == 1)
-                {
-                    ViewBag.Message = "todo bien";
-                    System.Diagnostics.Debug.WriteLine("hola hehhehe");
-                    return RedirectToAction("Menu");
-                }
-                else if (dt_response == 0)
-                {
-                    ViewBag.Message = "todo mal";
-                    System.Diagnostics.Debug.WriteLine("hola mal");
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.Message = "todo pésimo";
-                    System.Diagnostics.Debug.WriteLine("hola pez");
-                    return RedirectToAction("Index");
-                }
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
-
-        }
-
         [Route("Home/SesionesAIR")]
         public ActionResult SesionesAIR()
         {
@@ -101,6 +49,7 @@ namespace Back_End.Controllers
             con.Close();
             da.Fill(dt);
             return View(dt);
+
         }
 
         [Route("Home/SesionAIR")]
@@ -162,12 +111,11 @@ namespace Back_End.Controllers
                 items.Add(new SelectListItem { Text = row["AnioInicio"].ToString() + " - " + row["AnioFin"].ToString(), Value = row["Id"].ToString() });
             }
             ViewBag.Periodo = items;
-            ViewBag.Validacion = false;
             return View();
         }
 
         [HttpPost]
-        public ActionResult CrearSesionAIR(FormCrearSesionAIR model) {
+        public ActionResult GuardarNuevaSesionAIR(FormCrearSesionAIR model) {
             if (ModelState.IsValid)
             {
                 string path = "";
@@ -209,24 +157,11 @@ namespace Back_End.Controllers
                 //DataTable dt = new DataTable();
                 con.Close();
                 //da.Fill(dt);
-                return RedirectToAction("SesionesAIR");
             }
-            SqlConnection conection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            conection.Open();
-            SqlCommand cmd3 = new SqlCommand("SELECT * FROM dbo.Periodo;", conection);
-            SqlDataAdapter data = new SqlDataAdapter(cmd3);
-            DataTable datatable = new DataTable();
-            conection.Close();
-            data.Fill(datatable);
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (DataRow row in datatable.Rows)
-            {
-                items.Add(new SelectListItem { Text = row["AnioInicio"].ToString() + " - " + row["AnioFin"].ToString(), Value = row["Id"].ToString() });
-            }
-            ViewBag.Periodo = items;
-            ViewBag.Validacion = true;
-            return View(model);
+            return RedirectToAction("SesionesAIR");
         }
+
+
 
         [Route("Home/CrearSesionDAIR")]
         public ActionResult CrearSesionDAIR()
@@ -248,7 +183,7 @@ namespace Back_End.Controllers
         }
 
         [HttpPost]
-        public ActionResult CrearSesionDAIR(FormCrearSesionDAIR model)
+        public ActionResult GuardarNuevaSesionDAIR(FormCrearSesionDAIR model)
         {
             if (ModelState.IsValid)
             {
@@ -266,22 +201,8 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                return RedirectToAction("SesionesDAIR");
             }
-            SqlConnection conection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            conection.Open();
-            SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.Periodo;", conection);
-            SqlDataAdapter data = new SqlDataAdapter(cmd2);
-            DataTable datatable = new DataTable();
-            conection.Close();
-            data.Fill(datatable);
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (DataRow row in datatable.Rows)
-            {
-                items.Add(new SelectListItem { Text = row["AnioInicio"].ToString() + " - " + row["AnioFin"].ToString(), Value = row["Id"].ToString() });
-            }
-            ViewBag.Periodo = items;
-            return View();
+            return RedirectToAction("SesionesDAIR");
         }
 
 
@@ -311,7 +232,7 @@ namespace Back_End.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditarSesionAIR(FormEditarDetallesSesionAIR model)
+        public ActionResult EnviarEdicionSesionAIR(FormEditarDetallesSesionAIR model)
         {
             if (ModelState.IsValid)
             {
@@ -353,20 +274,9 @@ namespace Back_End.Controllers
                 //DataTable dt2 = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                return RedirectToAction("SesionesAIR");
                 //da2.Fill(dt2);
             }
-            SqlConnection con2 = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con2.Open();
-            SqlCommand cmd3 = new SqlCommand("EXEC ReadSesionAIR " + model.Id, con2);
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd3);
-            DataTable dt2 = new DataTable();
-            con2.Close();
-            da2.Fill(dt2);
-            ViewBag.NombreSesionAIR = dt2.Rows[0]["Nombre"];
-            ViewBag.LinkAIR = dt2.Rows[0]["Link"];
-            ViewBag.Id = dt2.Rows[0]["Id"].ToString();
-            return View();
+            return RedirectToAction("SesionesAIR");
         }
 
         [Route("Home/EditarSesionDAIR")]
@@ -381,14 +291,14 @@ namespace Back_End.Controllers
             con.Close();
             da.Fill(dt);
             ViewBag.NombreSesionDAIR = dt.Rows[0]["Nombre"];
-            //ViewBag.LinkDAIR = dt.Rows[0]["Link"];
+            ViewBag.LinkDAIR = dt.Rows[0]["Link"];
             ViewBag.Id = dt.Rows[0]["Id"].ToString();
             return View();
             //return File(path, "application/pdf");
         }
 
         [HttpPost]
-        public ActionResult EditarSesionDAIR(FormEditarDetallesSesionDAIR model)
+        public ActionResult EnviarEdicionSesionDAIR(FormEditarDetallesSesionAIR model)
         {
             if (ModelState.IsValid)
             {
@@ -400,19 +310,8 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                return RedirectToAction("SesionesDAIR");
             }
-            SqlConnection con2 = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con2.Open();
-            SqlCommand cmd2 = new SqlCommand("EXEC ReadSesionDAIR " + model.Id, con2);
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            DataTable dt2 = new DataTable();
-            con2.Close();
-            da2.Fill(dt2);
-            ViewBag.NombreSesionDAIR = dt2.Rows[0]["Nombre"];
-            //ViewBag.LinkDAIR = dt.Rows[0]["Link"];
-            ViewBag.Id = dt2.Rows[0]["Id"].ToString();
-            return View();
+            return RedirectToAction("SesionesDAIR");
         }
 
         public ActionResult BorrarSesionAIR(string id)
@@ -453,11 +352,6 @@ namespace Back_End.Controllers
             return View();
         }
 
-        public ActionResult VerPropuestaAIR(String link)
-        {
-            return Redirect("http://" + link);
-            return RedirectToAction("SesionesAIR");
-        }
 
         public ActionResult BorrarPropuestaAIR(String id)
         {
@@ -519,7 +413,7 @@ namespace Back_End.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditarPropuestaAIR(FormEditarPropuestaAIR model)
+        public ActionResult EnviarEdicionPropuestaAIR(FormEditarPropuestaAIR model)
         {
      
             if (!ModelState.IsValid)
@@ -545,35 +439,17 @@ namespace Back_End.Controllers
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                con.Close();
-                return RedirectToAction("SesionesAIR");// + dt1.Rows[0]["SesionAIRId"].ToString());
 
-            }
-            SqlConnection con2 = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.Etapa;", con2);
-            SqlDataAdapter data = new SqlDataAdapter(cmd2);
-            DataTable datatable = new DataTable();
-            data.Fill(datatable);
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (DataRow row in datatable.Rows)
-            {
-                items.Add(new SelectListItem { Text = row["Nombre"].ToString(), Value = row["Id"].ToString() });
-            }
-            ViewBag.EtapaId = items;
-            con2.Open();
-            SqlCommand cmd4 = new SqlCommand("EXEC ReadPropuestaAIR " + model.Id, con2);
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd4);
-            DataTable dt2 = new DataTable();
-            con2.Close();
-            da2.Fill(dt2);
-            ViewBag.NombrePropuestaAIR = dt2.Rows[0]["Nombre1"];
-            ViewBag.ID = model.Id;
-            ViewBag.Link = dt2.Rows[0]["Link"];
-            ViewBag.NumeroPropuesta = dt2.Rows[0]["NumeroDePropuesta"];
-            ViewBag.VotosFavor = dt2.Rows[0]["VotosAFavor"];
-            ViewBag.VotosContra = dt2.Rows[0]["VotosEnContra"];
-            ViewBag.VotosBlanco = dt2.Rows[0]["VotosEnBlanco"];
-            return View();
+                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaAIR WHERE Id=" + model.Id, con);
+
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                con.Close();
+                return RedirectToAction("SesionAIR/" + dt2.Rows[0]["SesionAIRId"].ToString());
+
+        }
+            return RedirectToAction("SesionesAIR");
         }
 
 
@@ -603,7 +479,7 @@ namespace Back_End.Controllers
         }
 
         [HttpPost]
-        public ActionResult CrearPropuestaDAIR(FormCrearPropuestaDAIR model)
+        public ActionResult GuardarNuevaPropuestaDAIR(FormCrearPropuestaDAIR model)
         {
             if (ModelState.IsValid)
             {
@@ -618,14 +494,8 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                return RedirectToAction("SesionesDAIR");
             }
-            ViewBag.SesionDAIRId = model.Id.ToString();
-            List<SelectListItem> items_aprovado = new List<SelectListItem>();
-            items_aprovado.Add(new SelectListItem { Text = "Sí", Value = "1" });
-            items_aprovado.Add(new SelectListItem { Text = "No", Value = "0" });
-            ViewBag.Aprovado = items_aprovado;
-            return View();
+            return RedirectToAction("SesionesDAIR");
         }
 
         //CREAR PROPUESTA AIR
@@ -653,161 +523,8 @@ namespace Back_End.Controllers
             return View();
         }
 
-        [Route("Home/PadronesAIR")]
-        public ActionResult PadronesAIR()
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC GetPeriodo", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Close();
-            da.Fill(dt);
-            return View(dt);
-        }
-
-        [Route("Home/PadronAIR")]
-        public ActionResult PadronAIR(String id)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC GetPadron " + id, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-
-            SqlCommand cmd2 = new SqlCommand("EXEC ReadPeriodo " + id, con);
-            SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            DataTable dt2 = new DataTable();
-
-            con.Close();
-            da.Fill(dt);
-            da2.Fill(dt2);
-            ViewBag.Nombre = "Padrón " + dt2.Rows[0]["AnioInicio"] + "-" + dt2.Rows[0]["AnioFin"];
-            return View(dt);
-        }
-
-        [Route("Home/CrearPadronAIR")]
-        public ActionResult CrearPadronAIR()
-        {
-            /*SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ReadPeriodo" + id, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Close();
-            da.Fill(dt);*/
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult GuardarNuevoPadronAIR(FormCrearPadron model)
-        {
-            if (ModelState.IsValid)
-            {
-                string path = "";
-                try
-                {
-                    if (model.ArchivoPadron.ContentLength > 0)
-                    {
-                        string _FileName = Path.GetFileName(model.ArchivoPadron.FileName);
-                        string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
-                        model.ArchivoPadron.SaveAs(_path);
-                        path = _path;
-                    }
-                    ViewBag.Message = "File Uploaded Successfully!!";
-                    //return View();
-                }
-                catch
-                {
-                    ViewBag.Message = "File upload failed!!";
-                    //return View();
-                }
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC CreatePeriodo " + 
-                    model.AnioInicio + ", " +
-                    model.AnioFin);
-                cmd.Connection = con;
-                var temp = cmd.ExecuteScalar();
-                SqlCommand cmd2 = new SqlCommand("EXEC NuevoPadronAIR " + Convert.ToString(temp) +
-                                                ", '" + path + "', '" +
-                                                model.NombrePadron + "'");
-                cmd2.Connection = con;
-                cmd2.ExecuteNonQuery();
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                //DataTable dt = new DataTable();
-                con.Close();
-                //da.Fill(dt);
-            }
-            return RedirectToAction("PadronesAIR");
-        }
-
-        [Route("Home/EditarPadronAIR")]
-        public ActionResult EditarPadronAIR(String id)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ReadPeriodo " + id, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Close();
-            da.Fill(dt);
-            ViewBag.Id = id;
-            ViewBag.AnioInicio = dt.Rows[0]["AnioInicio"];
-            ViewBag.AnioFin = dt.Rows[0]["AnioFin"];
-            FromViewModelPadron mymodel = new FromViewModelPadron();
-            mymodel.datatable = dt;
-            return View(mymodel);
-        }
-
-        [HttpPost]
-        public ActionResult EnviarEdicionPadronAIR(FromViewModelPadron model)
-        {
-            if (ModelState.IsValid)
-            {
-                System.Console.WriteLine("Se tiene la infomacion");
-                string path = "";
-                try
-                {
-                    if (model.padron.ArchivoPadron.ContentLength > 0)
-                    {
-                        string _FileName = Path.GetFileName(model.padron.ArchivoPadron.FileName);
-                        string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
-                        model.padron.ArchivoPadron.SaveAs(_path);
-                        path = _path;
-                    }
-                    ViewBag.Message = "File Uploaded Successfully!!";
-                    //return View();
-                }
-                catch
-                {
-                    ViewBag.Message = "File upload failed!!";
-                    //return View();
-                }
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC NuevoPadronAIR " + model.Id +
-                                                ", '" + path + "', '" +
-                                                model.padron.NombrePadron + "'");
-                cmd.Connection = con;
-                cmd.ExecuteNonQuery();
-
-                SqlCommand cmd2 = new SqlCommand("EXEC UpdatePeriodo " + model.Id +
-                                                ", " + model.padron.AnioInicio + ", " +
-                                                model.padron.AnioFin);
-                cmd2.Connection = con;
-                cmd2.ExecuteNonQuery();
-                //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-                //DataTable dt2 = new DataTable();
-                con.Close();
-                //da.Fill(dt);
-                //da2.Fill(dt2);
-            }
-            return RedirectToAction("PadronesAIR");
-        }
-
-        [HttpPost]
-        public ActionResult CrearPropuestaAIR(FormCrearPropuestaAIR model)
+        public ActionResult GuardarNuevaPropuestaAIR(FormCrearPropuestaAIR model)
         {
             if (ModelState.IsValid)
             {
@@ -827,27 +544,8 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                return RedirectToAction("SesionAIR/" + model.Id.ToString());
             }
-            SqlConnection conection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            conection.Open();
-            SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.Etapa;", conection);
-            SqlDataAdapter data = new SqlDataAdapter(cmd2);
-            DataTable datatable = new DataTable();
-            conection.Close();
-            data.Fill(datatable);
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (DataRow row in datatable.Rows)
-            {
-                items.Add(new SelectListItem { Text = row["Nombre"].ToString(), Value = row["Id"].ToString() });
-            }
-            ViewBag.EtapaId = items;
-            ViewBag.SesionAIRId = model.Id;
-            List<SelectListItem> items_aprovado = new List<SelectListItem>();
-            items_aprovado.Add(new SelectListItem { Text = "Sí", Value = "1" });
-            items_aprovado.Add(new SelectListItem { Text = "No", Value = "0" });
-            ViewBag.Aprovado = items_aprovado;
-            return View();
+            return RedirectToAction("SesionAIR/"+model.Id.ToString());
         }
 
         [HttpPost]
@@ -866,8 +564,17 @@ namespace Back_End.Controllers
                     + model.Link + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
-                con.Close();
+                
                 da.Fill(dt);
+
+                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaDAIR WHERE Id=" + model.Id, con);
+
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                con.Close();
+                return RedirectToAction("SesionDAIR/" + dt2.Rows[0]["SesionDAIRId"].ToString());
+
             }
             return RedirectToAction("SesionesDAIR");
         }
@@ -938,6 +645,7 @@ namespace Back_End.Controllers
             return View(datatable4);
         }
 
+
         public ActionResult AsistenciaAIR()
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -959,43 +667,7 @@ namespace Back_End.Controllers
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            ViewBag.Id = id;
-            FromViewModelAsistencia mymodel = new FromViewModelAsistencia();
-            mymodel.datatable = dt;
-            return View(mymodel);
-        }
-
-        public ActionResult ActualizarAsistencia(FromViewModelAsistencia model)
-        {
-            string path = "";
-            try
-            {
-                if (model.asistencia.ArchivoPadron.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(model.asistencia.ArchivoPadron.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
-                    model.asistencia.ArchivoPadron.SaveAs(_path);
-                    path = _path;
-                }
-                ViewBag.Message = "File Uploaded Successfully!!";
-                //return View();
-            }
-            catch
-            {
-                ViewBag.Message = "File upload failed!!";
-                //return View();
-            }
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ActualizarRegistroAIR " + model.Id +
-                                            ", '" + path + "', '" +
-                                            model.asistencia.NombrePadron + "'");
-            cmd.Connection = con;
-            cmd.ExecuteNonQuery();
-            //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-            //DataTable dt2 = new DataTable();
-            con.Close();
-            return RedirectToAction("AsistenciaAIR");
+            return View(dt);
         }
 
         [Route("Home/Notificaciones")]
@@ -1017,53 +689,8 @@ namespace Back_End.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public ActionResult GuardarNuevaNotificacion(FormCrearNotificacion model)
-        {
-            if (ModelState.IsValid)
-            {
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-                con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC CreateNotificacion "
-                    + model.Descripcion + "', '"
-                    + model.FechaNotificacion + "'", con);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                con.Close();
-                da.Fill(dt);
-            }
-            return RedirectToAction("Notificaciones");
-        }
-
-        [Route("Home/EditarNotificacion")]
-        // https://stackoverflow.com/questions/11100981/asp-net-mvc-open-pdf-file-in-new-window
-        public ActionResult EditarNotificacion(string id)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion " + id, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Close();
-            da.Fill(dt);
-            ViewBag.Nombre = dt.Rows[0]["Nombre"];
-            ViewBag.Contrasenna = dt.Rows[0]["Contrasenia"];
-            return RedirectToAction("Notificaciones");
-            //return File(path, "application/pdf");
-        }
-
-        public ActionResult BorrarNotificacion(string id)
-        {
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
-            con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC DeleteNotificacion " + id, con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            con.Close();
-            da.Fill(dt);
-            return RedirectToAction("Notificaciones");
-        }
     }
+
+
 
 }
