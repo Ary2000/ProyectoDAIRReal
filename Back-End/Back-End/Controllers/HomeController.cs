@@ -401,6 +401,11 @@ namespace Back_End.Controllers
             return View();
         }
 
+        public ActionResult VerPropuestaAIR(String link)
+        {
+            return Redirect("http://" + link);
+            return RedirectToAction("SesionesAIR");
+        }
 
         public ActionResult BorrarPropuestaAIR(String id)
         {
