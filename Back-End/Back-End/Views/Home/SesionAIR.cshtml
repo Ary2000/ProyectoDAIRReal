@@ -71,7 +71,6 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col" class="table--name">Nombre</th>
                             <th scope="col">Etapa</th>
                             <th scope="col"> Detalles </th>
@@ -82,7 +81,6 @@
                         @foreach (DataRow row in Model.Rows)
                         {
                             <tr>
-                                <th scope="row">@row["Id"].ToString()</th>
                                 <td>@row["Nombre"].ToString() </td>
                                 @if (row["Aprovado"].ToString() == "True")
                                 {

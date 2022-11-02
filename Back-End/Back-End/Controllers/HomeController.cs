@@ -439,10 +439,16 @@ namespace Back_End.Controllers
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                con.Close();
-                return RedirectToAction("SesionesAIR");// + dt1.Rows[0]["SesionAIRId"].ToString());
 
-            }
+                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaAIR WHERE Id=" + model.Id, con);
+
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                con.Close();
+                return RedirectToAction("SesionAIR/" + dt2.Rows[0]["SesionAIRId"].ToString());
+
+        }
             return RedirectToAction("SesionesAIR");
         }
 
@@ -558,8 +564,17 @@ namespace Back_End.Controllers
                     + model.Link + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
-                con.Close();
+                
                 da.Fill(dt);
+
+                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaDAIR WHERE Id=" + model.Id, con);
+
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                con.Close();
+                return RedirectToAction("SesionDAIR/" + dt2.Rows[0]["SesionDAIRId"].ToString());
+
             }
             return RedirectToAction("SesionesDAIR");
         }
