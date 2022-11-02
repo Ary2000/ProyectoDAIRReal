@@ -168,15 +168,15 @@ SET NOCOUNT ON
 				@cedula NVARCHAR(16),
 				@inicio INT,
 				@fin INT
-		SET @sql = 'SELECT DEPARTAMENTO,
+		SET @sql = 'SELECT [DEPARTAMENTO / ESCUELA / GRUPO ADMINISTRATIVO],
 							SECTOR,
 							[CAMPUS O  CENTRO ACADÉMICO],
 							NOMBRE + '' '' +[PRIMER APELLIDO] + '' '' + [SEGUNDO APELLIDO],
-							CEDULA
+							CÉDULA
 					FROM OPENROWSET(''Microsoft.ACE.OLEDB.16.0'',
 						''Excel 12.0; Database=' + @Route + ''',
 						''select * from ['+@Sheet+'$]'')
-					WHERE CEDULA IS NOT NULL'
+					WHERE CÉDULA IS NOT NULL'
 		SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 		BEGIN TRANSACTION modificarAsistenciaAIR
 			UPDATE dbo.RegistroAsistenciaAIR
