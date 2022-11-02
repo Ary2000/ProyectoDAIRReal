@@ -615,7 +615,7 @@ namespace Back_End.Controllers
                 da.Fill(dt);
                 return RedirectToAction("SesionesDAIR");
             }
-            ViewBag.SesionDAIRId = model.Id;
+            ViewBag.SesionDAIRId = model.Id.ToString();
             List<SelectListItem> items_aprovado = new List<SelectListItem>();
             items_aprovado.Add(new SelectListItem { Text = "Sí", Value = "1" });
             items_aprovado.Add(new SelectListItem { Text = "No", Value = "0" });
