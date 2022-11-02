@@ -8,6 +8,7 @@ namespace Back_End.Models
 {
     public class FormEditarPropuestaAIR
     {
+        [Required]
         public string Id { get; set; }
         [Required]
         public string SesionAIRId { get; set; }

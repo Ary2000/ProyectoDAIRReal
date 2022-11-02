@@ -11,21 +11,21 @@ namespace Back_End.Models
         // SesionDAIRId
         [Required]
         public string Id { get; set; }
-        [Required]
+        [Required (ErrorMessage = "Inserte una etapa válida")]
         public string EtapaId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un nombre válido")]
         public string Nombre { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Seleccionar opcion")]
         public string Aprovado { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un link válido")]
         public string Link { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un número de propuesta")]
         public string NumeroPropuesta { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un número válido")]
         public string VotosFavor { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un número válido")]
         public string VotosContra { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un número válido")]
         public string VotosBlanco { get; set; }
     }
 }
