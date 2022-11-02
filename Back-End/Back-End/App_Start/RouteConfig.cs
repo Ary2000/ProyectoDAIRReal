@@ -149,6 +149,11 @@ namespace Back_End
                 defaults: new { controller = "Home" }
             );
             routes.MapRoute(
+                name: "GuardarNuevaNotificacion",
+                url: "{controller}/GuardarNuevaNotificacion",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
                 name: "Menu",
                 url: "{controller}/Menu",
                 defaults: new { controller = "Home" }
@@ -156,6 +161,16 @@ namespace Back_End
             routes.MapRoute(
                 name: "ValidarLogin",
                 url: "{controller}/ValidarLogin",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "CambiarContrasenna",
+                url: "{controller}/CambiarContrasenna",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
+                name: "ValidarCambioContrasenna",
+                url: "{controller}/ValidarCambioContrasenna",
                 defaults: new { controller = "Home" }
             );
             routes.MapRoute(

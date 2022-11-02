@@ -40,6 +40,45 @@ namespace Back_End.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("Home/CambiarContrasenna")]
+        public ActionResult CambiarContrasenna()
+        {
+            return View();
+        }
+
+        [Route("Home/ValidarCambioContrasenna")]
+        public ActionResult ValidarCambioContrasenna(FormCambiarContrasenna model)
+        {
+            if (ModelState.IsValid)
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC CambiarContrasennia "
+                    + model.Nombre + ", '"
+                    + model.Contrasenia + ", '"
+                    + model.NuevaContrasenia + "'", con);
+                int dt_response;
+                dt_response = (int)cmd.ExecuteScalar();
+                con.Close();
+                if (dt_response == 1)
+                {
+                    return RedirectToAction("Index");
+                }
+                else if (dt_response == 0)
+                {
+                    return RedirectToAction("CambiarContrasenna");
+                }
+                else
+                {
+                    return RedirectToAction("CambiarContrasennia");
+                }
+            }
+            else
+            {
+                return RedirectToAction("CambiarContrasennia");
+            }
+        }
+
         [HttpPost]
         public ActionResult ValidarLogin(FormLogin model) {
             if (ModelState.IsValid)
@@ -54,20 +93,14 @@ namespace Back_End.Controllers
                 con.Close();
                 if (dt_response == 1)
                 {
-                    ViewBag.Message = "todo bien";
-                    System.Diagnostics.Debug.WriteLine("hola hehhehe");
                     return RedirectToAction("Menu");
                 }
                 else if (dt_response == 0)
                 {
-                    ViewBag.Message = "todo mal";
-                    System.Diagnostics.Debug.WriteLine("hola mal");
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    ViewBag.Message = "todo pésimo";
-                    System.Diagnostics.Debug.WriteLine("hola pez");
                     return RedirectToAction("Index");
                 }
             }
@@ -75,7 +108,6 @@ namespace Back_End.Controllers
             {
                 return RedirectToAction("Index");
             }
-
         }
 
         [Route("Home/SesionesAIR")]

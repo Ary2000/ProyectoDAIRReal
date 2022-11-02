@@ -1,11 +1,11 @@
 ﻿
 @{
     Layout = null;
-    ViewBag.Title = "CrearNotificacion";
+    ViewBag.Title = "CambiarContrasenna";
 }
 
 @using System.Data
-@model Back_End.Models.FormCrearNotificacion
+@model Back_End.Models.FormCambiarContrasenna
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@
 <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <h5 class="navbar--tittle"> Crear notificacion </h5>
+            <h5 class="navbar--tittle"> Cambiar contraseña </h5>
         </div>
     </nav>
 </header>
@@ -42,36 +42,45 @@
     <div class="container-fluid container">
         <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
             <div class="form--container">
-                @using (Html.BeginForm("GuardarNuevaNotificacion", "Home", FormMethod.Post))
+                @using (Html.BeginForm("ValidarCambioContrasenna", "Home", FormMethod.Post))
                 {
                     <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-3">
-                                <label for="validationTooltip03">Descripción de la notificacion: </label>
-                                @Html.TextBoxFor(model => model.Descripcion, new
+                                <label for="validationTooltip03">Usuario: </label>
+                                @Html.TextBoxFor(model => model.Nombre, new
                                 {
                                    @class = "form-control",
                                    type = "text"
                                 })
-                                @Html.ValidationMessageFor(model => model.Descripcion)
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
-                                <label for="validationTooltip03">Fecha de la notificacion: </label>
-                                @Html.TextBoxFor(model => model.FechaNotificacion, new
+                                <label for="validationTooltip03">Contraseña actual: </label>
+                                @Html.TextBoxFor(model => model.Contrasenia, new
                                 {
                                      @class = "form-control",
-                                     type = "date"
+                                     type = "password"
+                                })
+                            </div>
+                        </div>
+                        <div class="form-row justify-content-center">
+                            <div class="col-md-6 mb-4">
+                                <label for="validationTooltip03">Contraseña nueva: </label>
+                                @Html.TextBoxFor(model => model.NuevaContrasenia, new
+                                {
+                                    @class = "form-control",
+                                    type = "password"
                                 })
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
                                 <div class="container--header">
-                                    @Html.ActionLink("Volver", "Notificaciones", null, new { @class = "btn btn-secondary btn-back" })
-                                    <button class="btn btn-primary" type="submit">Guardar</button>
+                                    @Html.ActionLink("Volver", "Menu", null, new { @class = "btn btn-secondary btn-back" })
+                                    <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +88,7 @@
                     </form>
                 }
             </div>
-            
+
         </form>
     </div>
 </body>

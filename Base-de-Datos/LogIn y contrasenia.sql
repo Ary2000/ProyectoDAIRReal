@@ -34,12 +34,12 @@ END
 GO
 
 
-IF OBJECT_ID('[dbo].[CambiarContrasenina]') IS NOT NULL
+IF OBJECT_ID('[dbo].[CambiarContrasennia]') IS NOT NULL
 BEGIN 
-    DROP PROC [dbo].[CambiarContrasenina] 
+    DROP PROC [dbo].[CambiarContrasennia] 
 END 
 GO
-CREATE PROC [dbo].[CambiarContrasenina]   
+CREATE PROC [dbo].[CambiarContrasennia]   
     @usuario NVARCHAR(64),
     @Contrasenia NVARCHAR(32),
     @NuevaContrasenia NVARCHAR(32)
