@@ -6,6 +6,7 @@
 @{
     Layout = null;
     ViewBag.Title = "CrearSesionAIR";
+    HtmlHelper.ClientValidationEnabled = ViewBag.Validacion;
 }
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm("GuardarNuevaSesionAIR", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("CrearSesionAIR", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
@@ -52,15 +53,17 @@
                                @class = "form-control",
                                type = "text"
                            })
-                            @Html.ValidationMessageFor(model => model.Nombre)
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger"})
                             
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03"> Periodo: </label>
-                            @Html.DropDownList("Periodo", (IEnumerable<SelectListItem>)ViewBag.Periodo, String.Empty, new{
+                            @Html.DropDownList("Periodo", (IEnumerable<SelectListItem>)ViewBag.Periodo, String.Empty, new
+                            {
                             @class = "form-control",
                             type = "select"
                             })
+                            @Html.ValidationMessageFor(model => model.Periodo, "", new { @class = "text-danger" })
                         </div>
 
                     </div>
@@ -72,6 +75,7 @@
                            @class = "form-control",
                            type = "date"
                        })
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Inicio: </label>
@@ -80,6 +84,7 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoInicial, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Fin: </label>
@@ -88,18 +93,22 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoFinal, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            
-                            <label for="validationTooltip03">Padrón: </label>
+
+                            <label for="validationTooltip03">Nombre de la hoja del padrón: </label>
                             @Html.TextBoxFor(model => model.NombrePadron, new
                        {
                            @class = "form-control",
                            type = "text"
                        })
-                            @Html.TextBoxFor(model => model.ArchivoPadron, new { type = "file" }) <br />
+                       @Html.ValidationMessageFor(model => model.NombrePadron, "", new { @class = "text-danger" })<br />
+                            <label for="validationTooltip03">Archivo que contiene el padrón: </label><br />
+                            @Html.TextBoxFor(model => model.ArchivoPadron, new { type = "file" })
+                            @Html.ValidationMessageFor(model => model.ArchivoPadron, "", new { @class = "text-danger" })<br />
                         </div>
                     </div>
 

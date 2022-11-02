@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Back_End.Models
 {
-    public class FormEditarDetallesSesionAIR
+    public class FormEditarDetallesSesionDAIR
     {
         [Required(ErrorMessage = "Insertar nombre válido")]
         public string Id { get; set; }
@@ -21,10 +21,7 @@ namespace Back_End.Models
         public string TiempoFinal { get; set; }
         public string Descripcion { get; set; }
         public string Link { get; set; }
-        [Required(ErrorMessage = "Inserta página del padrón")]
         public string NombrePadron { get; set; }
-        [Required(ErrorMessage = "insertar archivo válido")]
-        [FileAttribute(ErrorMessage = "Por favor enviar xlsx")]
         public HttpPostedFileBase ArchivoPadron { get; set; }
     }
 }

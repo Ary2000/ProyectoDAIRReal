@@ -39,7 +39,7 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm($"GuardarNuevaPropuestaDAIR/{ViewBag.SesionDAIRId}", "Home", FormMethod.Post))
+            @using (Html.BeginForm($"CrearPropuestaDAIR/{ViewBag.SesionDAIRId}", "Home", FormMethod.Post))
 
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
@@ -52,6 +52,7 @@
                                 @class = "form-control",
                                 type = "text"
                             })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-row">
@@ -62,6 +63,7 @@
                            @class = "form-control",
                            type = "select"
                            })
+                            @Html.ValidationMessageFor(model => model.Aprovado, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -73,10 +75,11 @@
                            @class = "form-control",
                            type = "form-input"
                        })
+                            @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="container--header">
-                        @Html.ActionLink("Volver", "SesionesDAIR", new { @class = "btn btn-outline-secondary" });
+                        @Html.ActionLink("Volver", $"SesionDAIR/{ViewBag.SesionDAIRId}", null, new { @class = "btn btn-outline-secondary" })
                         <button class="btn btn-outline-secondary" type="submit">Guardar</button>
                     </div>
 

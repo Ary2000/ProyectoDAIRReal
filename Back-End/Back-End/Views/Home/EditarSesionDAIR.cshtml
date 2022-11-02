@@ -1,5 +1,5 @@
 ﻿@using System.Data
-@model Back_End.Models.FormEditarDetallesSesionAIR
+@model Back_End.Models.FormEditarDetallesSesionDAIR
 @{
     Layout = null;
     ViewBag.Title = "EditarSesionAIR";
@@ -38,7 +38,7 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm($"EnviarEdicionSesionDAIR/{ViewBag.ID}", "Home", FormMethod.Post))
+            @using (Html.BeginForm($"EditarSesionDAIR/{ViewBag.ID}", "Home", FormMethod.Post))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
@@ -46,7 +46,7 @@
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre del Evento: </label>
                             @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombreSesionDAIR, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Nombre)
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         </div>
 
                     </div>
@@ -58,6 +58,7 @@
                            @class = "form-control",
                            type = "date"
                        })
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Inicio: </label>
@@ -66,6 +67,7 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoInicial, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Fin: </label>
@@ -74,11 +76,12 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoFinal, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="container--header">
-                        @Html.ActionLink("Volver", "SesionesDAIR", new { @class = "btn btn-outline-secondary" })
+                        @Html.ActionLink("Volver", "SesionesDAIR", null, new { @class = "btn btn-outline-secondary" })
                         <button class="btn btn-outline-secondary" type="submit">Guardar</button>
                     </div>
 
