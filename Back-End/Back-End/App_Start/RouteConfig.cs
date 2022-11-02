@@ -149,6 +149,11 @@ namespace Back_End
                 defaults: new { controller = "Home" }
             );
             routes.MapRoute(
+                name: "EditarNotificacion",
+                url: "{controller}/EditarNotificacion",
+                defaults: new { controller = "Home" }
+            );
+            routes.MapRoute(
                 name: "GuardarNuevaNotificacion",
                 url: "{controller}/GuardarNuevaNotificacion",
                 defaults: new { controller = "Home" }

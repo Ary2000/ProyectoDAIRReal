@@ -14,6 +14,7 @@ using Back_End.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Web.UI;
 using System.Web.Optimization;
+using System.Web.Helpers;
 //using static System.Net.WebRequestMethods;
 
 namespace Back_End.Controllers
@@ -54,9 +55,9 @@ namespace Back_End.Controllers
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
                 SqlCommand cmd = new SqlCommand("EXEC CambiarContrasennia "
-                    + model.Nombre + ", '"
-                    + model.Contrasenia + ", '"
-                    + model.NuevaContrasenia + "'", con);
+                    + model.Nombre + ", "
+                    + model.Contrasenia + ", "
+                    + model.NuevaContrasenia , con);
                 int dt_response;
                 dt_response = (int)cmd.ExecuteScalar();
                 con.Close();
@@ -739,9 +740,55 @@ namespace Back_End.Controllers
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC CreateNotificacion "
+                SqlCommand cmd = new SqlCommand("EXEC CreateNotificacion '"
                     + model.Descripcion + "', '"
-                    + model.FechaNotificacion + "'", con);
+                    + model.Fecha + "' ", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                con.Close();
+                da.Fill(dt);
+                
+                /*
+                var customerName = Request["Mariell"];
+                var customerEmail = Request["mariellsanchez99@gmail.com"];
+                var customerRequest = Request["aqui va algo"];
+                var errorMessage = "";
+                try
+                {
+                    // Initialize WebMail helper
+                    WebMail.SmtpServer = "smtp.office365.com";
+                    WebMail.SmtpPort = 587;
+                    WebMail.EnableSsl = true;
+                    WebMail.UserName = "SoftwareDAIR";
+                    WebMail.Password = "Dair-2022";
+                    WebMail.From = "softwaredair@outlook.com";
+                    WebMail.SmtpUseDefaultCredentials = true;
+                    // Send email
+                    WebMail.Send(
+                        to: "mariellsanchez99@gmail.com",
+                        subject: "Help request from - Mariell ",
+                        body: "sth goes over here"
+                    );
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = ex.Message;
+                }*/
+            }
+            return RedirectToAction("Notificaciones");
+        }
+
+        [HttpPost]
+        public ActionResult GuardarEdicionNotificacion(FormEditarNotificacion model)
+        {
+            if (ModelState.IsValid)
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("EXEC UpdateNotificacion "
+                    + model.Id + ", '"
+                    + model.Descripcion + "', '"
+                    + model.Fecha + "' ", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 con.Close();
@@ -750,20 +797,21 @@ namespace Back_End.Controllers
             return RedirectToAction("Notificaciones");
         }
 
+
         [Route("Home/EditarNotificacion")]
         // https://stackoverflow.com/questions/11100981/asp-net-mvc-open-pdf-file-in-new-window
         public ActionResult EditarNotificacion(string id)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion " + id, con);
+            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion 1003" + id, con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            ViewBag.Nombre = dt.Rows[0]["Nombre"];
-            ViewBag.Contrasenna = dt.Rows[0]["Contrasenia"];
-            return RedirectToAction("Notificaciones");
+            ViewBag.Motivo = dt.Rows[0]["Motivo"];
+            ViewBag.FechaNotificacion = dt.Rows[0]["FechaNotificacion"];
+            return RedirectToAction("EditarNotificacion");
             //return File(path, "application/pdf");
         }
 

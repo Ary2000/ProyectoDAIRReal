@@ -40,7 +40,6 @@
 
 <body>
     <div class="container-fluid container">
-        <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
             <div class="form--container">
                 @using (Html.BeginForm("GuardarNuevaNotificacion", "Home", FormMethod.Post))
                 {
@@ -60,7 +59,7 @@
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
                                 <label for="validationTooltip03">Fecha de la notificacion: </label>
-                                @Html.TextBoxFor(model => model.FechaNotificacion, new
+                                @Html.TextBoxFor(model => model.Fecha, new
                                 {
                                      @class = "form-control",
                                      type = "date"
@@ -79,8 +78,6 @@
                     </form>
                 }
             </div>
-            
-        </form>
     </div>
 </body>
 <script>

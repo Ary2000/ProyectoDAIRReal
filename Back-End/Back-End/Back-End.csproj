@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FormCambiarContrasenna.cs" />
+    <Compile Include="Models\FormEditarNotificacion.cs" />
     <Compile Include="Models\FromViewModelPadron.cs" />
     <Compile Include="Models\FormCrearPadron.cs" />
     <Compile Include="Models\FromViewModelAsistencia.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Home\EditarPadronAIR.cshtml" />
     <Content Include="Views\Home\PadronAIR.cshtml" />
     <Content Include="Views\Home\CambiarContrasenna.cshtml" />
+    <Content Include="Views\Home\EditarNotificacion.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

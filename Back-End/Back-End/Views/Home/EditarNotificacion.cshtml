@@ -1,11 +1,11 @@
 ﻿
 @{
     Layout = null;
-    ViewBag.Title = "CambiarContrasenna";
+    ViewBag.Title = "EditarNotificacion";
 }
 
 @using System.Data
-@model Back_End.Models.FormCambiarContrasenna
+@model Back_End.Models.FormCrearNotificacion
 
 <!DOCTYPE html>
 <html>
@@ -33,57 +33,48 @@
 <header>
     <nav class="navbar">
         <div class="container-fluid">
-            <h5 class="navbar--tittle"> Cambiar contraseña </h5>
+            <h5 class="navbar--tittle"> Editar notificacion </h5>
         </div>
     </nav>
 </header>
 
 <body>
     <div class="container-fluid container">
-            @Html.AntiForgeryToken()
+
             <div class="form--container">
-                @using (Html.BeginForm("ValidarCambioContrasenna", "Home", FormMethod.Post))
+                @using (Html.BeginForm("GuardarEdicionNotificacion", "Home", FormMethod.Post))
                 {
                     <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-3">
-                                <label for="validationTooltip03">Usuario: </label>
-                                @Html.TextBoxFor(model => model.Nombre, new
-                                {
-                                   @class = "form-control",
-                                   type = "text"
+                                <label for="validationTooltip03">Descripción de la notificacion: </label>
+                                @Html.TextBoxFor(model => model.Descripcion, new { 
+                                    Value = ViewBag.Motivo, 
+                                    @class = "form-input" 
                                 })
+                                @Html.ValidationMessageFor(model => model.Descripcion)
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
-                                <label for="validationTooltip03">Contraseña actual: </label>
-                                @Html.TextBoxFor(model => model.Contrasenia, new
-                                {
-                                     @class = "form-control",
-                                     type = "password"
-                                })
-                            </div>
-                        </div>
-                        <div class="form-row justify-content-center">
-                            <div class="col-md-6 mb-4">
-                                <label for="validationTooltip03">Contraseña nueva: </label>
-                                @Html.TextBoxFor(model => model.NuevaContrasenia, new
-                                {
-                                    @class = "form-control",
-                                    type = "password"
+                                <label for="validationTooltip03">Fecha de la notificacion: </label>
+                                @Html.TextBoxFor(model => model.Fecha, new {
+                                    Value = ViewBag.Fecha,
+                                    @class = "form-input" ,
+                                    type = "date"
                                 })
                             </div>
                         </div>
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-4">
                                 <div class="container--header">
-                                    @Html.ActionLink("Volver", "Menu", null, new { @class = "btn btn-secondary btn-back" })
-                                    <button class="btn btn-primary" type="submit">Cambiar contraseña</button>
+                                    @Html.ActionLink("Volver", "Notificaciones", null, new { @class = "btn btn-secondary btn-back" })
+                                    <button class="btn btn-primary" type="submit">Guardar</button>
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 }
             </div>
