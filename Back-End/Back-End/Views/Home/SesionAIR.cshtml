@@ -42,10 +42,6 @@
     <div class="container-fluid container">
         <div class="container--header">
             <h4> @ViewBag.Nombre </h4>
-            <div class="header--buttons">
-                <button class="btn btn-outline-secondary btn-up" type="submit">Ver padrón</button>
-                <button class="btn btn-outline-secondary btn-up" type="submit">Ir a la carpeta</button>
-            </div>
         </div>
         <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
             <div class="form-row">
@@ -104,7 +100,7 @@
                                         <a href="#" class="btn btn-primary ok" type="submit">OK</a>
                                     </div>
                                 </div>
-                                <a href=@row["Link"].ToString()  target="_blank" class="btn btn-secondary btn-sm">Ver Propuesta</a>
+                                <td> @Html.ActionLink("Ver Propuesta", "VerPropuestaAIR", new { link = row["link"] }, new { @class = "btn btn-secondary btn-sm" })</td>
                             </td>
                                 <td>
 
@@ -121,7 +117,7 @@
             </div>
             <div class="container--header">
                 @Html.RouteLink("Volver", "SesionesAIR", null, new { @class = "btn btn-outline-secondary" })
-                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaAIR", new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "accion--icon" })
+                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaAIR", new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "btn btn-primary" })
 
             </div>
         </form>

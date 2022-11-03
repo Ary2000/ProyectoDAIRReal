@@ -11,11 +11,11 @@ namespace Back_End.Models
         // SesionDAIRId
         [Required]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un nombre válido")]
         public string Nombre { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte una opcion válida")]
         public string Aprovado { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Inserte un link válido")]
         public string Link { get; set; }
     }
 }

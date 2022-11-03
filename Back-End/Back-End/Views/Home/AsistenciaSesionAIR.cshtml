@@ -101,15 +101,16 @@
         </div>
         <div class="footer--container">
             <div class="col-md-3 mb-3">
-                @Html.ActionLink("Volver", "AsistenciaAIR", null, new { @class = "btn btn-secondary btn-back" })
                 @using (Html.BeginForm($"ActualizarAsistencia/{ViewBag.Id}", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <label for="validationTooltip03">Padrón: </label>
+                    <label for="validationTooltip03">Nombre de la hoja del padrón: </label>
                     @Html.TextBoxFor(model => model.asistencia.NombrePadron, new { @class = "form-control", type = "text" })
+                    <label for="validationTooltip03">Archivo que contiene el padrón: </label><br />
                     @Html.TextBoxFor(model => model.asistencia.ArchivoPadron, new { type = "file" }) <br />
                     <button class="btn btn-outline-secondary" type="submit">Guardar</button>
                 }
             </div>
+            @Html.ActionLink("Volver", "AsistenciaAIR", null, new { @class = "btn btn-secondary btn-back" })
         </div>
 </body>
 </html>

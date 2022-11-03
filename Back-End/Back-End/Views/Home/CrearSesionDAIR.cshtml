@@ -41,7 +41,7 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm("GuardarNuevaSesionDAIR", "Home", FormMethod.Post))
+            @using (Html.BeginForm("CrearSesionDAIR", "Home", FormMethod.Post))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
@@ -49,19 +49,20 @@
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre del Evento: </label>
                             @Html.TextBoxFor(model => model.Nombre, new
-                       {
-                           @class = "form-control",
-                           type = "text"
-                       })
-                            @Html.ValidationMessageFor(model => model.Nombre)
+                            {
+                               @class = "form-control",
+                               type = "text"
+                           })
+                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03"> Periodo: </label>
                             @Html.DropDownList("Periodo", (IEnumerable<SelectListItem>)ViewBag.Periodo, String.Empty, new
-                       {
-                           @class = "form-control",
-                           type = "select"
-                       })
+                            {
+                            @class = "form-control",
+                            type = "select"
+                            })
+                            @Html.ValidationMessageFor(model => model.Periodo, "", new { @class = "text-danger" })
                         </div>
 
                     </div>
@@ -73,6 +74,7 @@
                            @class = "form-control",
                            type = "date"
                        })
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Inicio: </label>
@@ -81,6 +83,7 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoInicial, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Hora Fin: </label>
@@ -89,6 +92,7 @@
                            @class = "form-control",
                            type = "time"
                        })
+                            @Html.ValidationMessageFor(model => model.TiempoFinal, "", new { @class = "text-danger" })
                         </div>
                     </div>
 

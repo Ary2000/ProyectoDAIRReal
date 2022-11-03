@@ -41,10 +41,6 @@
     <div class="container-fluid container">
         <div class="container--header">
             <h4> @ViewBag.Nombre </h4>
-            <div class="header--buttons">
-                <button class="btn btn-outline-secondary btn-up" type="submit">Ver directorio</button>
-                <button class="btn btn-outline-secondary btn-up" type="submit">Ir a la carpeta</button>
-            </div>
         </div>
         <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
             <div class="form-row">
@@ -88,10 +84,7 @@
                                     @:<td>Rechazado</td>
                                 }
                                 <td>
-                                    <a href="#" class="btn btn-secondary btn-sm btn-votacion">
-                                        Ver votación
-                                    </a>
-                                    <a href=@row["Link"].ToString() target="_blank" class="btn btn-secondary btn-sm">Propuesta</a>
+                                <td> @Html.ActionLink("Ver Propuesta", "VerPropuestaAIR", new { link = row["link"] }, new { @class = "btn btn-secondary btn-sm" })</td>
                                 </td>
                                 <td>
                                     @Html.ActionLink("Editar", "EditarPropuestaDAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/pencil.png", alt = "Lapiz" })
@@ -106,7 +99,7 @@
             </div>
             <div class="container--header">
                 @Html.RouteLink("Volver", "SesionesDAIR", null, new { @class = "btn btn-outline-secondary" })
-                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaDAIR", new { SesionDAIRId = ViewBag.SesionDAIRId }, new { @class = "accion--icon" })
+                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaDAIR", new { SesionDAIRId = ViewBag.SesionDAIRId }, new { @class = "btn btn-outline-secondary" })
             </div>
         </form>
     </div>

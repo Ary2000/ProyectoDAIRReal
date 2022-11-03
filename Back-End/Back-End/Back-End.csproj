@@ -121,11 +121,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CustomValidation\FileAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\FormCambiarContrasenna.cs" />
     <Compile Include="Models\FormEditarNotificacion.cs" />
+    <Compile Include="Models\FormEditarDetallesSesionDAIR.cs" />
     <Compile Include="Models\FromViewModelPadron.cs" />
     <Compile Include="Models\FormCrearPadron.cs" />
     <Compile Include="Models\FromViewModelAsistencia.cs" />
