@@ -70,6 +70,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col" class="table--name">Nombre</th>
                             <th scope="col">Etapa</th>
                             <th scope="col"> Detalles </th>
@@ -80,6 +81,7 @@
                         @foreach (DataRow row in Model.Rows)
                         {
                             <tr>
+                                <th scope="row">@row["Id"].ToString()</th>
                                 <td>@row["Nombre"].ToString() </td>
                                 @if (row["Aprovado"].ToString() == "True")
                                 {
@@ -89,9 +91,12 @@
                                 {
                                     @:<td>Rechazado</td>
                                 }
-                            <td>
-                                <a href=@row["Link"].ToString() target="_blank" class="btn btn-secondary btn-sm">Ver Propuesta</a>
-                            </td>
+                                <td>
+                                    <a href="#" class="btn btn-secondary btn-sm btn-votacion">
+                                        Ver votación
+                                    </a>
+                                    <a href=@row["Link"].ToString() target="_blank" class="btn btn-secondary btn-sm">Propuesta</a>
+                                </td>
                                 <td>
                                     @Html.ActionLink("Editar", "EditarPropuestaDAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/pencil.png", alt = "Lapiz" })
                                     @Html.ActionLink("Borrar", "BorrarPropuestaDAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/trash.png", alt = "Basurero" })
