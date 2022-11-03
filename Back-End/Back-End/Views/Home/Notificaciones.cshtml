@@ -64,9 +64,9 @@
                             <tr>
                                 <th scope="row">@row["Id"].ToString()</th>
                                 <td>@row["Motivo"] </td>
-                                <td>@row["FechaNotificacion"]</td>
+                                <td>@row["FechaNotificacion"].ToString().Substring(0, 10)</td>
                                 <td>
-                                    
+                                    @Html.ActionLink("Editar", "EditarNotificacion", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
                                     @Html.ActionLink("Borrar", "BorrarNotificacion", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
                                 </td>
                             </tr>

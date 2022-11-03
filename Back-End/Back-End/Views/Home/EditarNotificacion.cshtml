@@ -42,16 +42,16 @@
     <div class="container-fluid container">
 
             <div class="form--container">
-                @using (Html.BeginForm("GuardarEdicionNotificacion", "Home", FormMethod.Post))
+                @using (Html.BeginForm($"GuardarEdicionNotificacion/{ViewBag.ID}", "Home", FormMethod.Post))
                 {
                     <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
                         <div class="form-row justify-content-center">
                             <div class="col-md-6 mb-3">
                                 <label for="validationTooltip03">Descripción de la notificacion: </label>
-                                @Html.TextBoxFor(model => model.Descripcion, new { 
-                                    Value = ViewBag.Motivo, 
-                                    @class = "form-input" 
+                                @Html.TextBoxFor(model => model.Descripcion, new {
+                                    Value = ViewBag.Motivo,
+                                    @class = "form-control"
                                 })
                                 @Html.ValidationMessageFor(model => model.Descripcion)
                             </div>
@@ -60,10 +60,10 @@
                             <div class="col-md-6 mb-4">
                                 <label for="validationTooltip03">Fecha de la notificacion: </label>
                                 @Html.TextBoxFor(model => model.Fecha, new {
-                                    Value = ViewBag.Fecha,
-                                    @class = "form-input" ,
+                                    @class = "form-control",
                                     type = "date"
                                 })
+                                
                             </div>
                         </div>
                         <div class="form-row justify-content-center">

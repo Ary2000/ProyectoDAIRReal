@@ -804,14 +804,15 @@ namespace Back_End.Controllers
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             con.Open();
-            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion 1003" + id, con);
+            SqlCommand cmd = new SqlCommand("EXEC ReadNotificacion " + id, con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
+            ViewBag.ID = id;
             ViewBag.Motivo = dt.Rows[0]["Motivo"];
             ViewBag.FechaNotificacion = dt.Rows[0]["FechaNotificacion"];
-            return RedirectToAction("EditarNotificacion");
+            return View();
             //return File(path, "application/pdf");
         }
 
