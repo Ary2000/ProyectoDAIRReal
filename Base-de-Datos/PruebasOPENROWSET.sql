@@ -133,11 +133,11 @@ DECLARE @TempTable TABLE(Sec INT IDENTITY(1,1),
 							Nombre NVARCHAR(128),
 							Cedula NVARCHAR(32))
 INSERT INTO @TempTable(Departamento,Sector,Sede,Nombre,Cedula)
-SELECT [DEPARTAMENTO],
+SELECT [DEPARTAMENTO / ESCUELA / GRUPO ADMINISTRATIVO],
 		SECTOR,
-		[SEDE],
-		NOMBRE,
-		CEDULA
+		[CAMPUS O  CENTRO ACADÉMICO],
+		NOMBRE + ' ' +[PRIMER APELLIDO] + ' ' + [SEGUNDO APELLIDO],
+		CÉDULA
 FROM OPENROWSET('Microsoft.ACE.OLEDB.16.0',
     'Excel 12.0; Database=C:\Users\admin\Desktop\TEC\2022\Semestre II\Proyecto\Copia Padrón General Definitivo.xlsx', 'select * from [General Definitivo$]')
 --WHERE CÉDULA IS NOT NULL

@@ -181,11 +181,11 @@ BEGIN
 SET NOCOUNT ON
 	BEGIN TRY
 		DECLARE @TempTable TABLE(Sec INT IDENTITY(1,1),
-									Departamento NVARCHAR(64),
+									Departamento NVARCHAR(128),
 									Sector NVARCHAR(32),
 									Sede NVARCHAR(32),
 									Nombre NVARCHAR(128),
-									Cedula INT)
+									Cedula NVARCHAR(16))
 		DECLARE @sql NVARCHAR(MAX),
 				@cedula NVARCHAR(16),
 				@inicio INT,
@@ -233,15 +233,15 @@ SET NOCOUNT ON
 			INNER JOIN dbo.Departamento AS D ON TT.Departamento = D.Nombre
 			INNER JOIN dbo.Sector AS S ON TT.Sector = S.Nombre
 			INNER JOIN dbo.Sede AS Sd ON TT.Sede = Sd.Nombre
-			WHERE dbo.Asambleista.Cedula = CONVERT(NVARCHAR(16), TT.Cedula)
+			WHERE dbo.Asambleista.Cedula = TT.Cedula
 			
 			INSERT INTO dbo.Asambleista(DepartamentoId,SectorId,SedeId,Nombre,Cedula)
-			SELECT D.Id,S.Id,Sd.Id,TT.Nombre,CONVERT(NVARCHAR(16), TT.Cedula)
+			SELECT D.Id,S.Id,Sd.Id,TT.Nombre,TT.Cedula
 			FROM @TempTable TT
 			INNER JOIN dbo.Departamento AS D ON TT.Departamento = D.Nombre
 			INNER JOIN dbo.Sector AS S ON TT.Sector = S.Nombre
 			INNER JOIN dbo.Sede AS Sd ON TT.Sede = Sd.Nombre
-			WHERE CONVERT(NVARCHAR(16), TT.Cedula) NOT IN (SELECT Cedula FROM dbo.Asambleista)
+			WHERE TT.Cedula NOT IN (SELECT Cedula FROM dbo.Asambleista)
 			
 			SELECT @inicio = MIN(Sec),
 					@fin = MAX(Sec)
@@ -249,7 +249,7 @@ SET NOCOUNT ON
 			
 			WHILE @inicio <= @fin
 				BEGIN
-					SELECT @cedula = convert(nvarchar(16), TT.Cedula)
+					SELECT @cedula = TT.Cedula
 					FROM @TempTable TT
 					WHERE TT.Sec = @inicio
 					EXEC dbo.CreatePadron @cedula, @PeriodoId 
@@ -288,7 +288,7 @@ SET NOCOUNT ON
 									Sector NVARCHAR(32),
 									Sede NVARCHAR(32),
 									Nombre NVARCHAR(128),
-									Cedula INT)
+									Cedula NVARCHAR(16))
 		DECLARE @sql NVARCHAR(MAX),
 				@cedula NVARCHAR(16),
 				@inicio INT,
@@ -335,7 +335,7 @@ SET NOCOUNT ON
 			INNER JOIN dbo.Departamento AS D ON TT.Departamento = D.Nombre
 			INNER JOIN dbo.Sector AS S ON TT.Sector = S.Nombre
 			INNER JOIN dbo.Sede AS Sd ON TT.Sede = Sd.Nombre
-			WHERE dbo.Asambleista.Cedula = CONVERT(NVARCHAR(16), TT.Cedula)
+			WHERE dbo.Asambleista.Cedula = TT.Cedula
 			
 			SELECT @inicio = MIN(Sec),
 					@fin = MAX(Sec)
@@ -343,7 +343,7 @@ SET NOCOUNT ON
 			
 			WHILE @inicio <= @fin
 				BEGIN
-					SELECT @cedula = convert(NVARCHAR(16), TT.Cedula)
+					SELECT @cedula = TT.Cedula
 					FROM @TempTable TT
 					WHERE TT.Sec = @inicio
 					EXEC dbo.CreatePadron @PeriodoId, @cedula
