@@ -15,6 +15,10 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Web.UI;
 using System.Web.Optimization;
 using System.Web.Helpers;
+using MimeKit;
+using MailKit.Net.Smtp;
+
+
 //using static System.Net.WebRequestMethods;
 
 namespace Back_End.Controllers
@@ -852,33 +856,8 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                
-                /*
-                var customerName = Request["Mariell"];
-                var customerEmail = Request["mariellsanchez99@gmail.com"];
-                var customerRequest = Request["aqui va algo"];
-                var errorMessage = "";
-                try
-                {
-                    // Initialize WebMail helper
-                    WebMail.SmtpServer = "smtp.office365.com";
-                    WebMail.SmtpPort = 587;
-                    WebMail.EnableSsl = true;
-                    WebMail.UserName = "SoftwareDAIR";
-                    WebMail.Password = "Dair-2022";
-                    WebMail.From = "softwaredair@outlook.com";
-                    WebMail.SmtpUseDefaultCredentials = true;
-                    // Send email
-                    WebMail.Send(
-                        to: "mariellsanchez99@gmail.com",
-                        subject: "Help request from - Mariell ",
-                        body: "sth goes over here"
-                    );
-                }
-                catch (Exception ex)
-                {
-                    errorMessage = ex.Message;
-                }*/
+
+                NewNotificationEmail(model.Descripcion, model.Fecha);
             }
             return RedirectToAction("Notificaciones");
         }
@@ -898,6 +877,7 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
+                EditedNotificationEmail(model.Descripcion, model.Fecha);
             }
             return RedirectToAction("Notificaciones");
         }
@@ -932,8 +912,43 @@ namespace Back_End.Controllers
             da.Fill(dt);
             return RedirectToAction("Notificaciones");
         }
+
+        public void NewNotificationEmail(string desc, string fecha) {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Recordarios DAIR", "softwaredair@outlook.com"));
+            message.To.Add(new MailboxAddress("Secretaria DAIR", "mariellsanchez99@gmail.com"));
+            message.Subject = "Nuevo recordatorio añadido";
+            message.Body = new TextPart("plain") 
+            {
+                Text = "Hola! Se ha añadido un nuevo recordatorio. Descripción:" + desc + ". Fecha: " + fecha
+            };
+            using (var client = new SmtpClient () )
+            {
+                client.Connect("smtp.office365.com", 587, false);
+                client.Authenticate("softwaredair@outlook.com", "Dair-2022");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
+
+        public void EditedNotificationEmail(string desc, string fecha)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("Recordarios DAIR", "softwaredair@outlook.com"));
+            message.To.Add(new MailboxAddress("Secretaria DAIR", "mariellsanchez99@gmail.com"));
+            message.Subject = "Recordatorio editado";
+            message.Body = new TextPart("plain")
+            {
+                Text = "Hola! Se ha editado un recordatorio. Descripción:" + desc + ". Fecha: " + fecha
+            };
+            using (var client = new SmtpClient())
+            {
+                client.Connect("smtp.office365.com", 587, false);
+                client.Authenticate("softwaredair@outlook.com", "Dair-2022");
+                client.Send(message);
+                client.Disconnect(true);
+            }
+        }
     }
-
-
 
 }
