@@ -77,17 +77,18 @@
                                 <td>@row["Nombre"].ToString() </td>
                                 @if (row["Aprovado"].ToString() == "True")
                                 {
-                                    @:<td>Aprovado</td>
+                                    @:<td>Aprobado</td>
                                 }
                                 else
                                 {
                                     @:<td>Rechazado</td>
                                 }
-                                <td> @Html.ActionLink("Ver Propuesta", "VerPropuestaAIR", new { link = row["link"] }, new { @class = "btn btn-secondary btn-sm" })</td>
-                                
+
+                                <td> @Html.ActionLink("Ver Propuesta", "VerPropuestaDAIR", new { link = row["link"] }, new { @class = "btn btn-primary" })</td>
+
                                 <td>
-                                    @Html.ActionLink("Editar", "EditarPropuestaDAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/pencil.png", alt = "Lapiz" })
-                                    @Html.ActionLink("Borrar", "BorrarPropuestaDAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/trash.png", alt = "Basurero" })
+                                    @Html.ActionLink("Editar", "EditarPropuestaDAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
+                                    @Html.ActionLink("Borrar", "BorrarPropuestaDAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
                                 </td>
 
                             </tr>

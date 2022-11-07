@@ -31,6 +31,10 @@
     <nav class="navbar">
         <div class="container-fluid">
             <h5 class="navbar--tittle"> Editar Propuesta de AIR</h5>
+            <a href="./login.html" class="navbar--button">
+                <h5 href="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
+                <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
+            </a>
         </div>
     </nav>
 </header>
@@ -39,7 +43,7 @@
     @Html.AntiForgeryToken()
     <div class="container">
         <div class="search--container">
-            @using (Html.BeginForm($"EditarPropuestaAIR/{ViewBag.ID}", "Home", FormMethod.Post))
+            @using (Html.BeginForm($"EnviarEdicionPropuestaAIR/{ViewBag.ID}", "Home", FormMethod.Post))
             {
                 <form class="needs-validation" style="top: 50%; left: 50%;" novalidate>
 
@@ -47,7 +51,7 @@
                         <div class="col-md-4 mb-3">
                             <label for="validationTooltip03">Nombre de la propuesta: </label>
                             @Html.TextBoxFor(model => model.Nombre, new { Value = ViewBag.NombrePropuestaAIR, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.Nombre)
                         </div>
                     </div>
 
@@ -60,14 +64,14 @@
                            @class = "form-control",
                            type = "select"
                            })
-                            @Html.ValidationMessageFor(model => model.EtapaId, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="validationTooltip03">Número de Propuesta: </label>
                             @Html.TextBoxFor(model => model.NumeroPropuesta, new { Value = ViewBag.NumeroPropuesta, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.NumeroPropuesta, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.NumeroPropuesta)
                         </div>
                     </div>
                     <div class="form-row">
@@ -75,29 +79,29 @@
                             <label for="validationTooltip03">Link de la carpeta: </label>
 
                             @Html.TextBoxFor(model => model.Link, new { Value = ViewBag.Link, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.Link, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.Link)
 
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos a favor: </label>
                             @Html.TextBoxFor(model => model.VotosFavor, new { Value = ViewBag.VotosFavor, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.VotosFavor, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.VotosFavor)
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos Contra: </label>
                             @Html.TextBoxFor(model => model.VotosContra, new { Value = ViewBag.VotosContra, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.VotosContra, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.VotosContra)
 
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="validationTooltip03">Votos Blancos: </label>
                             @Html.TextBoxFor(model => model.VotosBlanco, new { Value = ViewBag.VotosBlanco, @class = "form-input" })
-                            @Html.ValidationMessageFor(model => model.VotosBlanco, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(model => model.VotosBlanco)
                         </div>
                     </div>
 
                     <div class="container--header">
-                        @Html.ActionLink("Volver", $"SesionesAIR", null, new { @class = "btn btn-outline-secondary" });
+                        @Html.ActionLink("Volver", "SesionesAIR", new { @class = "btn btn-outline-secondary" });
                         <button class="btn btn-outline-secondary" type="submit">Guardar</button>
                     </div>
 

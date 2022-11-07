@@ -33,6 +33,10 @@
     <nav class="navbar">
         <div class="container-fluid">
             <h5 class="navbar--tittle"> Sesion de AIR</h5>
+            <a href="~/login.html" class="navbar--button">
+                <h5 ref="./login.html" class="navbar--cerrar--sesion"> Cerrar sesión </h5>
+                <img class="navbar--icon" src="~/src/salir.png" alt="Salir">
+            </a>
         </div>
     </nav>
 </header>
@@ -63,49 +67,47 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col" class="table--name">Nombre</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Etapa</th>
-                            <th scope="col"> Detalles </th>
-                            <th scope="col"> Acciones</th>
+                            <th scope="col"> Votos a Favor</th>
+                            <th scope="col"> Votos en Contra</th>
+                            <th scope="col"> Votos en Blanco</th>
+                            <th scope="col"> Propuesta </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (DataRow row in Model.Rows)
                         {
                             <tr>
-                                <th scope="row">@row["Id"].ToString()</th>
                                 <td>@row["Nombre"].ToString() </td>
                                 @if (row["Aprovado"].ToString() == "True")
                                 {
-                                    @:<td>Aprovado</td>
+                                    @:<td>Aprobado</td>
                                 }
                                 else
                                 {
                                     @:<td>Rechazado</td>
                                 }
-                            <td>
-                                <a href="#" class="btn btn-secondary btn-sm btn-votacion">
-                                    Ver votación
-                                </a>
-                                <div id="myModal" class="modal">
-                                    <!-- Modal content -->
-                                    <div class="modal-content">
-                                        <div class="info--votacion">
-                                            <h3>Votación</h3>
-                                            <p>Votos a favor: @row["VotosAFavor"].ToString()</p>
-                                            <p>Votos en contra: @row["VotosEnContra"].ToString()</p>
-                                            <p>Votos en blanco: @row["VotosEnBlanco"].ToString()</p>
-                                        </div>
-                                        <a href="#" class="btn btn-primary ok" type="submit">OK</a>
-                                    </div>
-                                </div>
-                                <td> @Html.ActionLink("Ver Propuesta", "VerPropuestaAIR", new { link = row["link"] }, new { @class = "btn btn-secondary btn-sm" })</td>
-                            </td>
+                                <td>
+                                    <p> @row["VotosAFavor"].ToString()</p>
+                                </td>
+                                <td>
+                                    <p>@row["VotosEnContra"].ToString()</p>
+                                </td>
+                                <td>
+                                    <p>@row["VotosEnBlanco"].ToString()</p>
+                                </td>
+                                <td>
+                                    <a href=@row["Link"].ToString() target="_blank" class="btn btn-primary">Ver</a>
+                                </td>
                                 <td>
 
-                                    @Html.RouteLink("Editar", "EditarPropuestaAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/pencil.png", alt = "Lapiz" })
-                                    @Html.ActionLink("Borrar", "BorrarPropuestaAIR", new { id = row["Id"] }, new { @class = "accion--icon", src = "~/src/trash.png", alt = "Basurero" })
+                                    @Html.RouteLink("Editar", "EditarPropuestaAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
+
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink("Borrar", "BorrarPropuestaAIR", new { id = row["Id"] }, new { @class = "btn btn-secondary btn-sm" })
 
                                 </td>
 
@@ -117,7 +119,7 @@
             </div>
             <div class="container--header">
                 @Html.RouteLink("Volver", "SesionesAIR", null, new { @class = "btn btn-outline-secondary" })
-                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaAIR", new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "btn btn-primary" })
+                @Html.RouteLink("Agregar Propuesta", "CrearPropuestaAIR", new { SesionAIRId = ViewBag.SesionAIRId }, new { @class = "accion--icon" })
 
             </div>
         </form>
