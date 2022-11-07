@@ -884,7 +884,9 @@ namespace Back_End.Controllers
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            return View(dt);
+            FromViewModelAsistencia mymodel = new FromViewModelAsistencia();
+            mymodel.datatable = dt;
+            return View(mymodel);
         }
 
         [Route("Home/PadronesAIR")]
