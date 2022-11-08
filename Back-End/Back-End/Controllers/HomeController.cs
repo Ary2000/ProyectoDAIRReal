@@ -338,7 +338,6 @@ namespace Back_End.Controllers
             con.Close();
             da.Fill(dt);
             ViewBag.NombreSesionAIR = dt.Rows[0]["Nombre"];
-            ViewBag.LinkAIR = dt.Rows[0]["Link"];
             ViewBag.Id = dt.Rows[0]["Id"].ToString();
             return View();
             //return File(path, "application/pdf");
@@ -374,8 +373,7 @@ namespace Back_End.Controllers
                                                 ", '" + model.Nombre + "', '" +
                                                 model.Fecha + "', '" +
                                                 model.TiempoInicial + "', '" +
-                                                model.TiempoFinal + "', '" +
-                                                model.Link + "'", con);
+                                                model.TiempoFinal +"'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 SqlCommand cmd2 = new SqlCommand("EXEC NuevoRegistroAIR " + model.Id +
@@ -429,7 +427,7 @@ namespace Back_End.Controllers
                 System.Console.WriteLine("Se tiene la infomacion");
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("EXEC UpdateSesionDAIR " + model.Id + ", '" + model.Nombre + "', '" + model.Fecha + "', '" + model.TiempoInicial + "', '" + model.TiempoFinal + "', '" + model.Link + "'", con);
+                SqlCommand cmd = new SqlCommand("EXEC UpdateSesionDAIR " + model.Id + ", '" + model.Nombre + "', '" + model.Fecha + "', '" + model.TiempoInicial + "', '" + model.TiempoFinal  + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 con.Close();
@@ -684,7 +682,7 @@ namespace Back_End.Controllers
         [HttpPost]
         public ActionResult CrearPropuestaAIR(FormCrearPropuestaAIR model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
                 con.Open();
@@ -724,6 +722,7 @@ namespace Back_End.Controllers
             ViewBag.Aprovado = items_aprovado;
             return View();
         }
+
 
         [HttpPost]
         public ActionResult EnviarEdicionPropuestaAIR(FormEditarPropuestaAIR model)
@@ -875,7 +874,41 @@ namespace Back_End.Controllers
             return View(dt);
         }
 
-        public ActionResult AsistenciaSesionAIR(int id)
+
+        public ActionResult ActualizarAsistencia(FromViewModelAsistencia model)
+        {
+            string path = "";
+            try
+            {
+                if (model.asistencia.ArchivoPadron.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(model.asistencia.ArchivoPadron.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    model.asistencia.ArchivoPadron.SaveAs(_path);
+                    path = _path;
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+                //return View();
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                //return View();
+            }
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = new SqlCommand("EXEC ActualizarRegistroAIR " + model.Id +
+                                            ", '" + path + "', '" +
+                                            model.asistencia.NombrePadron + "'");
+            cmd.Connection = con;
+            cmd.ExecuteNonQuery();
+            //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+            //DataTable dt2 = new DataTable();
+            con.Close();
+            return RedirectToAction("AsistenciaAIR");
+     }
+
+    public ActionResult AsistenciaSesionAIR(int id)
         {
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             con.Open();
@@ -884,7 +917,10 @@ namespace Back_End.Controllers
             DataTable dt = new DataTable();
             con.Close();
             da.Fill(dt);
-            return View(dt);
+            FromViewModelAsistencia mymodel = new FromViewModelAsistencia();
+            mymodel.datatable = dt;
+            ViewBag.Id=id;
+            return View(mymodel);
         }
 
         [Route("Home/PadronesAIR")]
