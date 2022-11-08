@@ -57,14 +57,14 @@
                             <td>@(row["AnioInicio"].ToString() + "-" + row["AnioFin"].ToString())</td>
                             <td>@row["Nombre"]</td>
                             <td>@(row["Fecha"].ToString().Substring(0,10))</td>
-                            <td>@Html.ActionLink("Ver asistencia", "AsistenciaSesionAIR", new { id = row["Id"] }, new { @class = "btn btn-primary btn-sm btn-detalle" })</td>
+                            <td>@Html.ActionLink("Ver asistencia", "AsistenciaSesionAIR", new { id = row["Id"] }, new { @class = "btn btn-primary btn-back" })</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
         <div class="footer--container">
-            <a href="Menu" class="btn btn-secondary btn-back"> Volver </a>
+            <a href="Menu" class="btn btn-secondary btn-back" > Volver </a>
         </div>
         <script>
             $('#tableAsistenciaAIR').DataTable({
