@@ -737,10 +737,27 @@ namespace Back_End.Controllers
                 SqlDataAdapter da1 = new SqlDataAdapter(cmd1);
                 DataTable dt1 = new DataTable();
                 da1.Fill(dt1);
+
+                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaAIR WHERE Id=" + model.Id, con);
+
+                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
+                DataTable dt2 = new DataTable();
+                da2.Fill(dt2);
+                int aprovado;
+                if (dt2.Rows[0]["Aprovado"] == "False")
+                {
+                    aprovado = 0;
+                }
+                else
+                {
+                    aprovado = 1;
+                }
+
+
                 SqlCommand cmd = new SqlCommand("EXEC UpdatePropuestaAIR "
                     + model.Id + ", '"
                     + model.EtapaId + "', '"
-                    + model.Aprovado + "', '"
+                    + aprovado + "', '"
                     + model.Nombre + "', '"
                     + model.Link + "', '"
                     + model.NumeroPropuesta + "', '"
@@ -752,12 +769,6 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 da.Fill(dt);
 
-
-                SqlCommand cmd2 = new SqlCommand("SELECT * FROM dbo.PropuestaAIR WHERE Id=" + model.Id, con);
-
-                SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-                DataTable dt2 = new DataTable();
-                da2.Fill(dt2);
 
                 con.Close();
                 return RedirectToAction("SesionAIR/" + dt2.Rows[0]["SesionAIRId"].ToString());
@@ -1060,11 +1071,9 @@ namespace Back_End.Controllers
                                                 model.padron.AnioFin);
                 cmd2.Connection = con;
                 cmd2.ExecuteNonQuery();
-                //SqlDataAdapter da2 = new SqlDataAdapter(cmd2);
-                //DataTable dt2 = new DataTable();
+               
                 con.Close();
-                //da.Fill(dt);
-                //da2.Fill(dt2);
+               
             }
             return RedirectToAction("PadronesAIR");
         }
@@ -1104,7 +1113,7 @@ namespace Back_End.Controllers
                 con.Close();
                 da.Fill(dt);
 
-                NewNotificationEmail(model.Descripcion, model.Fecha);
+                //NewNotificationEmail(model.Descripcion, model.Fecha);
             }
             return RedirectToAction("Notificaciones");
         }
@@ -1124,7 +1133,7 @@ namespace Back_End.Controllers
                 DataTable dt = new DataTable();
                 con.Close();
                 da.Fill(dt);
-                EditedNotificationEmail(model.Descripcion, model.Fecha);
+                //EditedNotificationEmail(model.Descripcion, model.Fecha);
             }
             return RedirectToAction("Notificaciones");
         }
